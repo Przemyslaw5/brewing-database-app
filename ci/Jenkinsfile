@@ -1,5 +1,5 @@
 pipeline {
-    {
+    environment {
         registry = "przemyslaw5/brewing_database_app"
         registryCredential = 'przemyslaw5_dockerhub'
     }

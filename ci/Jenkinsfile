@@ -1,0 +1,75 @@
+pipeline {
+    {
+        registry = "przemyslaw5/brewing_database_app"
+        registryCredential = 'przemyslaw5_dockerhub'
+    }
+    agent {
+        docker {
+            image 'openjdk:14'
+            args '-u root'
+        }
+    }
+    stages {
+        stage('checkout sources') {
+            steps {
+                git branch: 'master', credentialsId: 'przemyslaw5_github',
+                        url: 'https://github.com/Przemyslaw5/brewing-database-app.git'
+            }
+        }
+        stage('build & test') {
+            steps {
+                sh 'sh mvnw package'
+            }
+        }
+        stage('prepare docker & cd resources') {
+            steps {
+                sh 'mkdir cd'
+                sh 'mv ci/deploy.sh cd/'
+                sh 'mv ci/docker-compose.yml cd/'
+                sh 'ls -l cd'
+
+                sh 'mkdir docker_build'
+                sh 'mv ci/Dockerfile docker_build/'
+                sh 'mv target/*.jar app.jar'
+                sh 'ls -l docker_build'
+            }
+        }
+        stage('build & push docker') {
+            steps {
+                sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
+                sh 'sh get-docker.sh'
+                script {
+                    dockerImageWithNumber = docker.build(registry + ":$BUILD_NUMBER", './docker_build/')
+                    dockerImageLatest = docker.build(registry + ":latest", './docker_build/')
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImageWithNumber.push()
+                        dockerImageLatest.push()
+                    }
+                }
+            }
+        }
+        stage('deploy') {
+            steps {
+                sshPublisher(
+                        continueOnError: false,
+                        failOnError: true,
+                        publishers: [
+                                sshPublisherDesc(
+                                        configName: 'DS_SERVER',
+                                        verbose: true,
+                                        transfers: [
+                                                sshTransfer(
+                                                        sourceFiles: "cd/**",
+                                                        removePrefix: "cd/",
+                                                        remoteDirectory: 'projects/przemek/brewing_database_app',
+                                                        execCommand: "bash projects/przemek/brewing_database_app/deploy.sh"
+                                                )
+                                        ]
+                                )
+                        ]
+                )
+                sh 'rm -r *'
+            }
+        }
+    }
+}

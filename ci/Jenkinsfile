@@ -30,7 +30,7 @@ pipeline {
 
                 sh 'mkdir docker_build'
                 sh 'mv ci/Dockerfile docker_build/'
-                sh 'mv target/*.jar app.jar'
+                sh 'mv target/*.jar docker_build/app.jar'
                 sh 'ls -l docker_build'
             }
         }

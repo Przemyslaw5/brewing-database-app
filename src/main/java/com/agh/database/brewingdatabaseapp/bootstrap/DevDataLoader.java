@@ -15,19 +15,19 @@ import java.time.LocalDate;
 @Component
 @Profile("dev")
 @Slf4j
-public class DataLoader implements CommandLineRunner {
+public class DevDataLoader implements CommandLineRunner {
 
     private final FreezerRepository freezerRepository;
     private final BatchRepository batchRepository;
 
-    public DataLoader(FreezerRepository freezerRepository, BatchRepository batchRepository){
+    public DevDataLoader(FreezerRepository freezerRepository, BatchRepository batchRepository){
         this.freezerRepository = freezerRepository;
         this.batchRepository = batchRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Run bootstrap");
+        log.info("Run bootstrap DevDataLoader");
         Freezer freezer = new Freezer();
         freezer.setName("freezer1");
         freezerRepository.save(freezer);

@@ -1,0 +1,39 @@
+version: '3.7'
+services:
+
+  brewing_database_mongo_express:
+    image: mongo-express
+    restart: unless-stopped
+    container_name: brewing_database_mongo_express
+    ports:
+      - 7002:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+    networks:
+      - brewing_database_network
+
+  brewing_database_mongo:
+    image: mongo
+    restart: unless-stopped
+    networks:
+      - brewing_database_network
+    container_name: brewing_database_mongo
+    ports:
+      - 7001:27017
+
+  brewing_database_app:
+    image: przemyslaw5/brewing_database_app:latest
+    restart: unless-stopped
+    networks:
+      - brewing_database_network
+    container_name: brewing_databas_app
+    ports:
+      - 7000:8080
+
+networks:
+  brewing_database_network:
+    driver: bridge
+
+
+

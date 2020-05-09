@@ -6,11 +6,13 @@ import com.agh.database.brewingdatabaseapp.model.Freezer;
 import com.agh.database.brewingdatabaseapp.repositories.BatchRepository;
 import com.agh.database.brewingdatabaseapp.repositories.FreezerRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 @Component
+@Profile("dev")
 public class DataLoader implements CommandLineRunner {
 
     private final FreezerRepository freezerRepository;

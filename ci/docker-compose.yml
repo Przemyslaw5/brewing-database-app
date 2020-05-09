@@ -9,7 +9,7 @@ services:
       - 7002:8081
     environment:
       ME_CONFIG_BASICAUTH_USERNAME: 'brewing'
-      ME_CONFIG_BASICAUTH_PASSWORD: 'bre@123$'
+      ME_CONFIG_BASICAUTH_PASSWORD: 'bre@123'
       ME_CONFIG_MONGODB_SERVER: brewing_database_mongo
   #    networks:
   #      - brewing_database_network

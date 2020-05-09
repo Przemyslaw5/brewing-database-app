@@ -1,12 +1,16 @@
 package com.agh.database.brewingdatabaseapp.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Document(collation = "ingredient")
 public class Ingredient {
 
@@ -15,14 +19,4 @@ public class Ingredient {
     private String name;
     private IngredientType ingredientType;
     private String description;
-
-    public Ingredient() {
-    }
-
-    public Ingredient(String id, String name, IngredientType ingredientType, String description) {
-        this.id = id;
-        this.name = name;
-        this.ingredientType = ingredientType;
-        this.description = description;
-    }
 }

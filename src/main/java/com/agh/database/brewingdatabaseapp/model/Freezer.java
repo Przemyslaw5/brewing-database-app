@@ -1,6 +1,8 @@
 package com.agh.database.brewingdatabaseapp.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -8,18 +10,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Document(collation = "freezer")
 public class Freezer {
 
     @Id
     private String id;
     private String name;
-
-    public Freezer() {
-    }
-
-    public Freezer(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 }

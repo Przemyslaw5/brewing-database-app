@@ -1,6 +1,6 @@
 package com.agh.database.brewingdatabaseapp.model;
 
-public enum Technique {
+public enum TechniqueType {
     DRY,
     BOIL;
 }

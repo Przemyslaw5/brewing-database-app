@@ -10,6 +10,7 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_SERVER: brewing_database_mongo
     networks:
       - brewing_database_network
 
@@ -31,9 +32,9 @@ services:
     ports:
       - 7000:8080
 
-networks:
-  brewing_database_network:
-    driver: bridge
+#networks:
+#  brewing_database_network:
+#    driver: bridge
 
 
 

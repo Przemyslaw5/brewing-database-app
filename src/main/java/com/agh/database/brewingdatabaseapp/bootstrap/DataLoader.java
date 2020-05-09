@@ -5,6 +5,7 @@ import com.agh.database.brewingdatabaseapp.model.BatchType;
 import com.agh.database.brewingdatabaseapp.model.Freezer;
 import com.agh.database.brewingdatabaseapp.repositories.BatchRepository;
 import com.agh.database.brewingdatabaseapp.repositories.FreezerRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 
 @Component
 @Profile("dev")
+@Slf4j
 public class DataLoader implements CommandLineRunner {
 
     private final FreezerRepository freezerRepository;
@@ -25,7 +27,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+        log.info("Run bootstrap");
         Freezer freezer = new Freezer();
         freezer.setName("freezer1");
         freezerRepository.save(freezer);

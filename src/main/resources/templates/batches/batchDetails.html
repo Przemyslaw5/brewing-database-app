@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DETAILS</title>
+</head>
+<body>
+<h2>Batch Details</h2>
+
+
+
+<table th:object="${batch}">
+    <tr>
+        <th>Name</th>
+        <td><b th:text="${batch.name}"></b></td>
+    </tr>
+    <tr>
+        <th>Freezer name</th>
+        <td><b th:text="${batch.freezer.name}"></b></td>
+    </tr>
+    <tr>
+        <th>BatchType</th>
+        <td><b th:text="${batch.batchType}"></b></td>
+    </tr>
+    <tr>
+        <th>BrewedDate</th>
+        <td><b th:text="${batch.brewedDate}"></b></td>
+    </tr>
+    <tr>
+        <th>BottledDate</th>
+        <td><b th:text="${batch.bottledDate}"></b></td>
+    </tr>
+</table>
+
+
+<br /><br /><br />
+<table>
+    <thead>
+        <tr>
+            <th style="width: 200px;">ID</th>
+            <th style="width: 200px;">Time</th>
+            <th style="width: 200px;">Temp Set</th>
+            <th style="width: 200px;">Temp in</th>
+            <th style="width: 200px;">Temp out</th>
+            <th style="width: 200px;">Epsilon</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="log : ${batch.logs}">
+            <td><b th:text="${log.id}"></b></td>
+            <td><b th:text="${log.time}"></b></td>
+            <td><b th:text="${log.temp_set}"></b></td>
+            <td><b th:text="${log.temp_in}"></b></td>
+            <td><b th:text="${log.temp_out}"></b></td>
+            <td><b th:text="${log.epsilon}"></b></td>
+        </tr>
+    </tbody>
+
+</table>
+<br />
+<a th:href="@{{id}/logs/new(id=${batch.id})}">Add New Log</a>
+
+
+
+<br /><br /><br />
+<table>
+    <thead>
+    <tr>
+        <th style="width: 200px;">Step</th>
+        <th style="width: 200px;">Duration time</th>
+        <th style="width: 200px;">Temp</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="mash : ${batch.mashes}">
+        <td><b th:text="${mash.step}"></b></td>
+        <td><b th:text="${mash.durationMins}"></b></td>
+        <td><b th:text="${mash.temp}"></b></td>
+    </tr>
+    </tbody>
+
+</table>
+<br />
+<!--<a th:href="@{{id}/logs/new(id=${batch.id})}">Add New Log</a>-->
+
+
+<br /><br /><br />
+<table>
+    <thead>
+    <tr>
+        <th style="width: 200px;">Ingredient Name</th>
+        <th style="width: 200px;">Amount</th>
+        <th style="width: 200px;">Time</th>
+        <th style="width: 200px;">TechniqueType</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="batchIngredient : ${batch.batchIngredients}">
+        <td><b><a th:href="@{/ingredients/__${batchIngredient.ingredientName}__}"  th:text="${batchIngredient.ingredientName}"/></a></b></td>
+        <td><b th:text="${batchIngredient.amount}"></b></td>
+        <td><b th:text="${batchIngredient.time}"></b></td>
+        <td><b th:text="${batchIngredient.techniqueType}"></b></td>
+    </tr>
+    </tbody>
+
+</table>
+<br />
+
+</body>
+</html>

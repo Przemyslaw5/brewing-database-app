@@ -9,9 +9,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
-public class BatchIngredients {
+public class BatchIngredient {
 
-    private String id;
+    private String batchID;
+    private String ingredientID;
+    private String ingredientName;
     private int amount;
     private LocalDate time;
     private TechniqueType techniqueType;

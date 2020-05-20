@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Ingredeint Details</h2>
+
+<table th:object="${ingredient}">
+    <tr>
+        <th>Name</th>
+        <td><b th:text="${ingredient.name}"></b></td>
+    </tr>
+    <tr>
+        <th>Type</th>
+        <td><b th:text="${ingredient.ingredientType}"></b></td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td><b th:text="${ingredient.description}"></b></td>
+    </tr>
+</table>
+
+<br /><br /><br />
+<table>
+    <thead>
+    <tr>
+        <th style="width: 200px;">Time Bought</th>
+        <th style="width: 200px;">Amount</th>
+        <th style="width: 200px;">Best Before</th>
+        <th style="width: 200px;">Opened</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="inventory : ${ingredient.inventories}">
+        <td><b th:text="${inventory.timeBought}"></b></td>
+        <td><b th:text="${inventory.amount}"></b></td>
+        <td><b th:text="${inventory.bestBefore}"></b></td>
+        <td><b th:text="${inventory.opened}"></b></td>
+    </tr>
+    </tbody>
+
+</table>
+
+</body>
+</html>

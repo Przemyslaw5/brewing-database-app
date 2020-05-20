@@ -2,10 +2,13 @@ package com.agh.database.brewingdatabaseapp.services;
 
 import com.agh.database.brewingdatabaseapp.model.Ingredient;
 import com.agh.database.brewingdatabaseapp.repositories.IngredientRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+@Service
 public class IngredientService implements MongoService<Ingredient, String> {
 
     private final IngredientRepository ingredientRepository;
@@ -25,6 +28,10 @@ public class IngredientService implements MongoService<Ingredient, String> {
     @Override
     public Ingredient findById(String s) {
         return ingredientRepository.findById(s).orElse(null);
+    }
+
+    public List<Ingredient> findByName(String s) {
+        return ingredientRepository.findByName(s);
     }
 
     @Override

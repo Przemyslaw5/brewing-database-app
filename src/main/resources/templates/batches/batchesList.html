@@ -23,14 +23,16 @@
     <tbody>
         <tr th:each="batch : ${matchingbatches}">
             <td>
-                <a th:text="${batch.name}"/></a>
+                <a th:href="@{/batches/__${batch.id}__}" th:text="${batch.name}"/></a>
             </td>
             <td th:text="${batch.freezer.name}"/>
             <td th:text="${batch.style}"/>
             <td th:text="${batch.batchType}"/>
             <td th:text="${batch.brewedDate}"/>
             <td th:text="${batch.bottledDate}"/>
-
+    <!--        <td th:text="${batch.city}"/>-->
+    <!--        <td th:text="${batch.telephone}"/>-->
+    <!--        <td><span th:each="pet : ${owner.pets}" th:text="${pet.name} "/></td>-->
         </tr>
     </tbody>
 </table>

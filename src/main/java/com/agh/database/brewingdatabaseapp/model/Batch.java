@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class Batch {
 
     @Id
     private String id;
+    @NotNull
     private String name;
     private Freezer freezer;
     private String style;

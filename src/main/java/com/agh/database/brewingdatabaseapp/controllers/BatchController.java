@@ -1,13 +1,17 @@
 package com.agh.database.brewingdatabaseapp.controllers;
 
 import com.agh.database.brewingdatabaseapp.model.Batch;
+import com.agh.database.brewingdatabaseapp.model.Freezer;
 import com.agh.database.brewingdatabaseapp.services.BatchService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class BatchController {
@@ -43,6 +47,30 @@ public class BatchController {
         else {
             model.put("matchingbatches", matchingBatches);
             return "batches/batchesList";
+        }
+    }
+
+    @GetMapping("/batches/new")
+    public String initCreationForm(Map<String, Object> model) {
+        Batch batch = new Batch();
+        model.put("batch", batch);
+
+        Set<Freezer> freezerSet = this.batchService.getUniqueFreezers();
+        model.put("freezers", freezerSet);
+
+        return "batches/new";
+    }
+
+    @PostMapping("/batches/new")
+    public String processCreationForm(@Valid Batch batch, BindingResult result) {
+        if (result.hasErrors()) {
+            System.out.println("Niepoprawne dane");
+            return "batches/new";
+        }
+        else {
+            System.out.println("Poprawne dane");
+            this.batchService.save(batch);
+            return "batches/new";
         }
     }
 }

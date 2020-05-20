@@ -22,12 +22,15 @@
 
     <tbody>
         <tr th:each="batch : ${matchingbatches}">
-            <td th:text="${batch.name}"/>
+            <td>
+                <a th:text="${batch.name}"/></a>
+            </td>
             <td th:text="${batch.freezer.name}"/>
             <td th:text="${batch.style}"/>
             <td th:text="${batch.batchType}"/>
             <td th:text="${batch.brewedDate}"/>
             <td th:text="${batch.bottledDate}"/>
+
         </tr>
     </tbody>
 </table>

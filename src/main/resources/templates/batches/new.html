@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Batch</title>
+</head>
+<body>
+
+    <h2>Batch</h2>
+    <form th:object="${batch}" method="post">
+        <div>
+            <div>
+                <label>Name:</label>
+                <input type="text" class="form-control" th:field="*{name}"/>
+            </div>
+            <div>
+                <label>Freezer:</label>
+                <select name="freezer">
+                    <option></option>
+                    <option th:each="freez : ${freezers}"
+                            th:value="${freez}" th:text="${freez.name}"></option>
+                </select>
+            </div>
+            <div>
+                <label>Style:</label>
+                <input type="text" class="form-control" th:field="*{style}"/>
+            </div>
+            <div>
+                <label>BatchType:</label>
+                <select name="batchType">
+                    <option th:value="0" text="Please Select"></option>
+                    <option th:each="typeOpt : ${T(com.agh.database.brewingdatabaseapp.model.BatchType).values()}"
+                            th:value="${typeOpt}" th:text="${typeOpt}"></option>
+                </select>
+            </div>
+            <div>
+                <label>BottledDate:</label>
+                <input type="date" class="form-control" th:field="*{bottledDate}"/>
+            </div>
+<!--            <input th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}" />-->
+<!--            <input th:replace="~{fragments/inputField :: input ('Freezer', 'freezer', 'text')}" />-->
+<!--            <input th:replace="~{fragments/inputField :: input ('Style', 'style', 'text')}" />-->
+<!--            <input th:replace="~{fragments/inputField :: input ('BatchType', 'batchType', 'text')}" />-->
+<!--            <input th:replace="~{fragments/inputField :: input ('BrewedDate', 'brewedDate', 'text')}" />-->
+<!--            <input th:replace="~{fragments/inputField :: input ('BottledDate', 'bottledDate', 'text')}" />-->
+        </div>
+        <div>
+            <div>
+                <button type="submit">Add Batch</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

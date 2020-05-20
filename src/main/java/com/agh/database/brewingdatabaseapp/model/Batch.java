@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,10 +20,12 @@ public class Batch {
     @Id
     private String id;
     private String name;
-    @DBRef
     private Freezer freezer;
     private String style;
     private BatchType batchType;
     private LocalDate brewedDate;
     private LocalDate bottledDate;
+    private List<Log> logs;
+    private List<Mash> mashes;
+    private List<BatchIngredients> batchIngredients;
 }

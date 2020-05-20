@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,4 +21,6 @@ public class Ingredient {
     private String name;
     private IngredientType ingredientType;
     private String description;
+    private List<BatchIngredients> batchIngredients;
+    private List<Inventory> inventories;
 }

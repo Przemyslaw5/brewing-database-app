@@ -18,7 +18,7 @@ public class IndexControllerProd {
 
     @RequestMapping({"/", ""})
     public String showOneBatch(Model model){
-        model.addAttribute("batch", batchService.findById("5eb6598ac4afbc5dccd17ee4"));
+//        model.addAttribute("batch", batchService.findById("5eb6598ac4afbc5dccd17ee4"));
         return "index";
     }
 }

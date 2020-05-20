@@ -1,41 +1,34 @@
 package com.agh.database.brewingdatabaseapp.bootstrap;
 
-import com.agh.database.brewingdatabaseapp.model.Batch;
-import com.agh.database.brewingdatabaseapp.model.BatchType;
-import com.agh.database.brewingdatabaseapp.model.Freezer;
-import com.agh.database.brewingdatabaseapp.repositories.BatchRepository;
-import com.agh.database.brewingdatabaseapp.repositories.FreezerRepository;
-import lombok.AllArgsConstructor;
+import com.agh.database.brewingdatabaseapp.services.BatchService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-
 @Component
 @Profile("prod")
 @Slf4j
-@AllArgsConstructor
 public class ProdDataLoader implements CommandLineRunner {
 
-    private final FreezerRepository freezerRepository;
-    private final BatchRepository batchRepository;
+    private final BatchService batchService;
+
+    public ProdDataLoader(BatchService batchService) {
+        this.batchService = batchService;
+    }
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Run bootstrap ProdDataLoader");
-        Freezer freezer = new Freezer();
-        freezer.setName("freezer154");
-        freezerRepository.save(freezer);
-
-        Batch batch = new Batch();
-        batch.setBottledDate(LocalDate.now());
-        batch.setBrewedDate(LocalDate.now());
-        batch.setFreezer(freezer);
-        batch.setName("batch53");
-        batch.setStyle("style4124");
-        batch.setBatchType(BatchType.LAGER);
-        batchRepository.save(batch);
+//        log.info("Run bootstrap ProdDataLoader");
+//        Freezer freezer = new Freezer("freezer154", "345 Maple St.","Madison");
+//
+//        Batch batch = new Batch();
+//        batch.setBottledDate(LocalDate.now());
+//        batch.setBrewedDate(LocalDate.now());
+//        batch.setFreezer(freezer);
+//        batch.setName("batch5476");
+//        batch.setStyle("style412489");
+//        batch.setBatchType(BatchType.LAGER);
+//        batchService.save(batch);
     }
 }

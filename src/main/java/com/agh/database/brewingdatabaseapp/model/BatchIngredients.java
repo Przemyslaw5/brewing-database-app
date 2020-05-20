@@ -12,9 +12,7 @@ import java.time.LocalDate;
 public class BatchIngredients {
 
     private String id;
-    private Ingredient ingredient;
     private int amount;
     private LocalDate time;
     private TechniqueType techniqueType;
-    private Batch batch;
 }

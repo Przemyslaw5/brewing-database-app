@@ -5,6 +5,7 @@ import com.agh.database.brewingdatabaseapp.repositories.BatchRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -28,6 +29,10 @@ public class BatchService implements MongoService<Batch, String> {
         return batchRepository.findById(s).orElse(null);
     }
 
+    public List<Batch> findByNameStartingWith(String s) {
+        return batchRepository.findByNameStartingWith(s);
+    }
+
     @Override
     public Batch save(Batch object) {
         return batchRepository.save(object);
@@ -42,4 +47,6 @@ public class BatchService implements MongoService<Batch, String> {
     public void deleteById(String s) {
         batchRepository.deleteById(s);
     }
+
+
 }

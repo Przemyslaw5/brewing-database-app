@@ -10,7 +10,6 @@ import lombok.Setter;
 public class Mash {
 
     private String id;
-    private Batch batch;
     private int step;
     private int durationMins;
     private double temp;

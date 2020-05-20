@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collation = "batch")
+@Document(collection = "batch")
 public class Batch {
 
     @Id

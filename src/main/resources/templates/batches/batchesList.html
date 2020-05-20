@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>Batches</h2>
+
+<table id="batches" class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 200px;">Name</th>
+            <th style="width: 200px;">Freezer</th>
+            <th style="width: 200px;">Style</th>
+            <th style="width: 200px;">BatchType</th>
+            <th style="width: 200px;">BrewedDate</th>
+            <th style="width: 200px;">BottledDate</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr th:each="batch : ${matchingbatches}">
+            <td th:text="${batch.name}"/>
+            <td th:text="${batch.freezer.name}"/>
+            <td th:text="${batch.style}"/>
+            <td th:text="${batch.batchType}"/>
+            <td th:text="${batch.brewedDate}"/>
+            <td th:text="${batch.bottledDate}"/>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

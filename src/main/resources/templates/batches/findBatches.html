@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>Find Batches</h2>
+
+<form th:object="${batch}" th:action="@{/batches}" method="get">
+    <div>
+        <label>Batch name</label>
+        <div>
+            <input th:field="*{name}" size="30" maxlength="80" />
+            <span>
+                <div th:if="${#fields.hasAnyErrors()}">
+                    <p th:text="${#fields.allErrors().get(0)}">Error</p>
+                </div>
+            </span>
+        </div>
+    </div>
+    <div>
+        <button type="submit">Find Batch</button>
+    </div>
+
+</form>
+
+
+
+</body>
+</html>

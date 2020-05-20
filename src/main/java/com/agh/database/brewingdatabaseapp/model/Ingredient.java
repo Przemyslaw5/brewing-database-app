@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collation = "ingredient")
+@Document(collection = "ingredient")
 public class Ingredient {
 
     @Id

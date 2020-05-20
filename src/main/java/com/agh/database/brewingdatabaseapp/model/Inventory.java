@@ -18,7 +18,6 @@ public class Inventory {
 
     @Id
     private String id;
-    private Ingredient ingredient;
     private LocalDate timeBought;
     private int amount;
     private LocalDate bestBefore;

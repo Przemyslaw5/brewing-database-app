@@ -12,7 +12,6 @@ import java.time.LocalDate;
 public class Log {
 
     private String id;
-    private Batch batch;
     private LocalDate time;
     private double temp_in;
     private double temp_out;

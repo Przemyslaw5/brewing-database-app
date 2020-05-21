@@ -25,14 +25,15 @@ public class Batch {
     private String id;
     @Size(min=5, max=20, message = "Name must be between 5 and 20 characters.")
     private String name;
-    @NotNull
     private Freezer freezer;
     @Size(min=3, max=15, message = "Name must be between 3 and 15 characters.")
     private String style;
     @NotNull
     private BatchType batchType;
+    @NotNull(message = "You mast set brewed date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate brewedDate;
+    @NotNull(message = "You mast set bottled date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate bottledDate;
     private List<Log> logs;

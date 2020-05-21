@@ -1,8 +1,11 @@
 package com.agh.database.brewingdatabaseapp.controllers;
 
 import com.agh.database.brewingdatabaseapp.model.Batch;
+import com.agh.database.brewingdatabaseapp.model.Log;
 import com.agh.database.brewingdatabaseapp.services.BatchService;
+import com.agh.database.brewingdatabaseapp.services.IngredientService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +21,11 @@ import java.util.Set;
 public class BatchController {
 
     private final BatchService batchService;
+    private final IngredientService ingredientService;
 
-    public BatchController(BatchService batchService){
+    public BatchController(BatchService batchService, IngredientService ingredientService){
         this.batchService = batchService;
+        this.ingredientService = ingredientService;
     }
 
     @GetMapping("batches/find")
@@ -60,66 +65,62 @@ public class BatchController {
     }
 
     @GetMapping("/batches/new")
-    public String initCreationForm(Map<String, Object> model) {
+    public String initCreationForm(Model model) {
         Batch batch = new Batch();
-        model.put("batch", batch);
-
-        Set<String> freezersName = this.batchService.getUniqueFreezerNames();
-        for (String s : freezersName) {
-            System.out.println(s);
-        }
-        model.put("freezers", freezersName);
-
+        Set<String> freezerNames = this.batchService.getUniqueFreezerNames();
+        batch.setBatchIngredients(ingredientService.prepareBatchIngredientsList());
+        model.addAttribute("batch", batch);
+        model.addAttribute("freezers", freezerNames);
         return "batches/new";
     }
 
     @PostMapping("/batches/new")
-    public String processCreationForm(@Valid Batch batch, BindingResult result, Map<String, Object> model) {
+    public String processCreationForm(@Valid Batch batch, BindingResult result, Model model) {
         if (result.hasErrors()) {
-
-            Set<String> freezersName = this.batchService.getUniqueFreezerNames();
-            for (String s : freezersName) {
-                System.out.println(s);
-            }
-            model.put("freezers", freezersName);
-
+            System.out.println(result.getAllErrors());
+            System.out.println("NIEPOPRAWNE DANE?");
+            Set<String> freezerNames = this.batchService.getUniqueFreezerNames();
+            batch.setBatchIngredients(ingredientService.prepareBatchIngredientsList());
+            model.addAttribute("freezers", freezerNames);
             return "batches/new";
         }
         else {
-            System.out.println("Poprawne dane");
+            batch.setBatchIngredients(ingredientService.getBatchIngredientsList(batch.getBatchIngredients(), batch));
+            batch.setFreezer(batchService.getFreezerByName(batch.getFreezer().getName()));
             this.batchService.save(batch);
-            return "batches/new";//return "redirect:/owners/" + owner.getId();
+            return "redirect:/batches/" + batch.getName();
         }
     }
 
-    @GetMapping("/batches/{batchId}")
-    public ModelAndView showBatch(@PathVariable("batchId") String batchId) {
+    @GetMapping("/batches/{batchName}")
+    public ModelAndView showBatch(@PathVariable("batchName") String batchName) {
         ModelAndView mav = new ModelAndView("batches/batchDetails");
-        Batch batch = this.batchService.findById(batchId);
+        Batch batch = this.batchService.findByName(batchName);
 
         mav.addObject(batch);
         return mav;
     }
 
-//    @GetMapping("/batches/{batchId}/logs/new")
-//    public String addNewLogToBatch(Batch batch, Map<String, Object> model){
-//        Log log = new Log();
-//        modelMap.put("log", log);
-//
-//        return "logs/new";
-//    }
+    @GetMapping("/batches/{batchName}/logs/new")
+    public String addNewLogToBatch(Model model){
 
-//    @PostMapping("/batches/{batchId}/logs/new")
-//    public String addNewLogToBatch(Batch batch, @Valid Log log, BindingResult result, ModelMap modelMap){
-//        batch.addLog(log);
-//        modelMap.put("log", log);
-//        if(result.hasErrors()){
-//            modelMap.put("log", log);
-//            return "logs/new";
-//        }
-//        else{
-//            batchService.save(batch);
-//            return "redirect:/batches/{batchId}";
-//        }
-//    }
+        Log log = new Log();
+        model.addAttribute("log", log);
+
+        return "logs/new";
+    }
+
+    @PostMapping("/batches/{batchName}/logs/new")
+    public String addNewLogToBatch(@PathVariable("batchName") String batchName, @Valid Log log, BindingResult result, Model model){
+        if(result.hasErrors()){
+            model.addAttribute("log", log);
+            return "logs/new";
+        }
+        else{
+            Batch batch = batchService.findByName(batchName);
+            batch.addLog(log);
+            batchService.save(batch);
+            return "redirect:/batches/" + batchName;
+        }
+    }
 }

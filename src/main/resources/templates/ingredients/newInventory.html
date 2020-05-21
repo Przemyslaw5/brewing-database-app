@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>Inventory</h2>
+<form th:object="${inventory}" method="post">
+    <div>
+        <div style="padding: 10px">
+            <label>Time Bought:</label>
+            <input type="date" class="form-control" th:field="*{timeBought}"/>
+            <td th:if="${#fields.hasErrors('timeBought')}" th:errors="*{timeBought}">Name Error</td>
+        </div>
+        <div style="padding: 10px">
+            <label>Amount:</label>
+            <input type="text" class="form-control" th:field="*{amount}"/>
+            <td th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Name Error</td>
+        </div>
+        <div style="padding: 10px">
+            <label>Best Before:</label>
+            <input type="date" class="form-control" th:field="*{bestBefore}"/>
+            <td th:if="${#fields.hasErrors('bestBefore')}" th:errors="*{bestBefore}">Name Error</td>
+        </div>
+        <div style="padding: 10px">
+            <label>Opened:</label>
+            <input type="date" class="form-control" th:field="*{opened}"/>
+            <td th:if="${#fields.hasErrors('opened')}" th:errors="*{opened}">Name Error</td>
+        </div>
+    </div>
+    <div>
+        <div style="padding: 10px">
+            <button type="submit">Add Inventory</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

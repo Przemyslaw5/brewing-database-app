@@ -1,62 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
+<!--private int id;-->
+<!--@NotNull-->
+<!--private LocalDate time;-->
+<!--@NotNull-->
+<!--private double temp_in;-->
+<!--@NotNull-->
+<!--private double temp_out;-->
+<!--@NotNull-->
+<!--private double temp_set;-->
+<!--@NotNull-->
+<!--private double epsilon;-->
 <body>
-<!--<h2>Batch</h2>-->
-<!--<form th:object="${log}" method="post">-->
-<!--    <div>-->
-<!--        <div style="padding: 10px">-->
-<!--            <label>Name:</label>-->
-<!--            <input type="text" class="form-control" th:field="*{name}"/>-->
-<!--            <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>-->
-<!--        </div>-->
-<!--        <div style="padding: 10px">-->
-<!--            <label>Freezer:</label>-->
-<!--            <select name="freezer">-->
-<!--                <option th:each="freez : ${freezers}"-->
-<!--                        th:value="${freez}" th:text="${freez}"></option>-->
-<!--            </select>-->
-<!--            &lt;!&ndash;                <td th:if="${#fields.hasErrors('freezer')}" th:errors="*{freezer}">Name Error</td>&ndash;&gt;-->
-<!--        </div>-->
-<!--        <div style="padding: 10px">-->
-<!--            <label>Style:</label>-->
-<!--            <input type="text" class="form-control" th:field="*{style}"/>-->
-<!--            <td th:if="${#fields.hasErrors('style')}" th:errors="*{style}">Name Error</td>-->
-<!--        </div>-->
-<!--        <div style="padding: 10px">-->
-<!--            <label>BatchType:</label>-->
-<!--            <select name="batchType">-->
-<!--                <option th:value="0" text="Please Select"></option>-->
-<!--                <option th:each="typeOpt : ${T(com.agh.database.brewingdatabaseapp.model.BatchType).values()}"-->
-<!--                        th:value="${typeOpt}" th:text="${typeOpt}"></option>-->
-<!--            </select>-->
-<!--            &lt;!&ndash;                <td th:if="${#fields.hasErrors('batchType')}" th:errors="*{batchType}">Name Error</td>&ndash;&gt;-->
-<!--        </div>-->
-<!--        <div style="padding: 10px">-->
-<!--            <label>BrewedDate:</label>-->
-<!--            <input type="date" class="form-control" th:field="*{brewedDate}"/>-->
-<!--            <td th:if="${#fields.hasErrors('brewedDate')}" th:errors="*{brewedDate}">Name Error</td>-->
-<!--        </div>-->
-<!--        <div style="padding: 10px">-->
-<!--            <label>BottledDate:</label>-->
-<!--            <input type="date" class="form-control" th:field="*{bottledDate}"/>-->
-<!--            <td th:if="${#fields.hasErrors('bottledDate')}" th:errors="*{bottledDate}">Name Error</td>-->
-<!--        </div>-->
-<!--        &lt;!&ndash;            <input th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}" />&ndash;&gt;-->
-<!--        &lt;!&ndash;            <input th:replace="~{fragments/inputField :: input ('Freezer', 'freezer', 'text')}" />&ndash;&gt;-->
-<!--        &lt;!&ndash;            <input th:replace="~{fragments/inputField :: input ('Style', 'style', 'text')}" />&ndash;&gt;-->
-<!--        &lt;!&ndash;            <input th:replace="~{fragments/inputField :: input ('BatchType', 'batchType', 'text')}" />&ndash;&gt;-->
-<!--        &lt;!&ndash;            <input th:replace="~{fragments/inputField :: input ('BrewedDate', 'brewedDate', 'text')}" />&ndash;&gt;-->
-<!--        &lt;!&ndash;            <input th:replace="~{fragments/inputField :: input ('BottledDate', 'bottledDate', 'text')}" />&ndash;&gt;-->
-<!--    </div>-->
-<!--    <div>-->
-<!--        <div style="padding: 10px">-->
-<!--            <button type="submit">Add Batch</button>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</form>-->
+<h2>Batch</h2>
+<form th:object="${log}" method="post">
+    <div>
+        <div style="padding: 10px">
+            <label>Time:</label>
+            <input type="date" class="form-control" th:field="*{time}"/>
+            <td th:if="${#fields.hasErrors('time')}" th:errors="*{time}">Name Error</td>
+        </div>
+        <div style="padding: 10px">
+            <label>Temperature in:</label>
+            <input type="text" class="form-control" th:field="*{temp_in}"/>
+            <td th:if="${#fields.hasErrors('temp_in')}" th:errors="*{temp_in}">Name Error</td>
+        </div>
+        <div style="padding: 10px">
+            <label>Temperature out:</label>
+            <input type="text" class="form-control" th:field="*{temp_out}"/>
+            <td th:if="${#fields.hasErrors('temp_out')}" th:errors="*{temp_out}">Name Error</td>
+        </div>
+        <div style="padding: 10px">
+            <label>Temperature set:</label>
+            <input type="text" class="form-control" th:field="*{temp_set}"/>
+            <td th:if="${#fields.hasErrors('temp_set')}" th:errors="*{temp_set}">Name Error</td>
+        </div>
+        <div style="padding: 10px">
+            <label>Epsilon: </label>
+            <input type="text" class="form-control" th:field="*{epsilon}"/>
+            <td th:if="${#fields.hasErrors('epsilon')}" th:errors="*{epsilon}">Name Error</td>
+        </div>
+    </div>
+    <div>
+        <div style="padding: 10px">
+            <button type="submit">Add Batch</button>
+        </div>
+    </div>
+</form>
 </body>
 </html>

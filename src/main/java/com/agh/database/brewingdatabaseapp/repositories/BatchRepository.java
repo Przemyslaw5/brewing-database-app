@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface BatchRepository extends MongoRepository<Batch, String> {
     List<Batch> findByNameStartingWith(String name);
+
+    Batch findByName(String name);
 }

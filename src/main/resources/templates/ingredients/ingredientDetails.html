@@ -26,8 +26,9 @@
 <table>
     <thead>
     <tr>
-        <th style="width: 200px;">Time Bought</th>
+        <th style="width: 200px;">ID</th>
         <th style="width: 200px;">Amount</th>
+        <th style="width: 200px;">Time Bought</th>
         <th style="width: 200px;">Best Before</th>
         <th style="width: 200px;">Opened</th>
     </tr>
@@ -35,14 +36,17 @@
     <tbody>
 
     <tr th:each="inventory : ${ingredient.inventories}">
-        <td><b th:text="${inventory.timeBought}"></b></td>
+        <td><b th:text="${inventory.id}"></b></td>
         <td><b th:text="${inventory.amount}"></b></td>
+        <td><b th:text="${inventory.timeBought}"></b></td>
         <td><b th:text="${inventory.bestBefore}"></b></td>
         <td><b th:text="${inventory.opened}"></b></td>
     </tr>
     </tbody>
 
 </table>
+
+<a th:href="@{/ingredients/{name}/new(name=${ingredient.name})}" class="btn btn-default">Add New Inventory</a>
 
 </body>
 </html>

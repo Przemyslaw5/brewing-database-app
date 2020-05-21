@@ -16,11 +16,10 @@
         </div>
         <div style="padding: 10px">
             <label>Freezer:</label>
-            <select name="freezer">
-                <option th:each="freez : ${freezers}"
-                        th:value="${freez}" th:text="${freez}"></option>
+            <select th:field="*{freezer.name}">
+                <option th:each="freez : ${freezers}" th:value="${freez}" th:text="${freez}"></option>
             </select>
-            <!--                <td th:if="${#fields.hasErrors('freezer')}" th:errors="*{freezer}">Name Error</td>-->
+            <td th:if="${#fields.hasErrors('freezer')}" th:errors="*{freezer}">Name Error</td>
         </div>
         <div style="padding: 10px">
             <label>Style:</label>
@@ -30,11 +29,11 @@
         <div style="padding: 10px">
             <label>BatchType:</label>
             <select name="batchType">
-                <option th:value="0" text="Please Select"></option>
+                <option th:value="0" text="Please Select" disabled selected></option>
                 <option th:each="typeOpt : ${T(com.agh.database.brewingdatabaseapp.model.BatchType).values()}"
                         th:value="${typeOpt}" th:text="${typeOpt}"></option>
             </select>
-            <!--                <td th:if="${#fields.hasErrors('batchType')}" th:errors="*{batchType}">Name Error</td>-->
+            <td th:if="${#fields.hasErrors('batchType')}" th:errors="*{batchType}">Name Error</td>
         </div>
         <div style="padding: 10px">
             <label>BrewedDate:</label>
@@ -46,18 +45,45 @@
             <input type="date" class="form-control" th:field="*{bottledDate}"/>
             <td th:if="${#fields.hasErrors('bottledDate')}" th:errors="*{bottledDate}">Name Error</td>
         </div>
-        <!--            <input th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}" />-->
-        <!--            <input th:replace="~{fragments/inputField :: input ('Freezer', 'freezer', 'text')}" />-->
-        <!--            <input th:replace="~{fragments/inputField :: input ('Style', 'style', 'text')}" />-->
-        <!--            <input th:replace="~{fragments/inputField :: input ('BatchType', 'batchType', 'text')}" />-->
-        <!--            <input th:replace="~{fragments/inputField :: input ('BrewedDate', 'brewedDate', 'text')}" />-->
-        <!--            <input th:replace="~{fragments/inputField :: input ('BottledDate', 'bottledDate', 'text')}" />-->
     </div>
+
+
+
+    <table id="batches" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 200px;">Ingredient name</th>
+            <th style="width: 200px;">Amount</th>
+            <th style="width: 200px;">Time</th>
+            <th style="width: 200px;">Technique</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="batchIngredient, itemStat : *{batchIngredients}">
+            <td th:text="*{batchIngredients[__${itemStat.index}__].ingredientName}"/>
+            <td><input th:field="*{batchIngredients[__${itemStat.index}__].amount}" /></td>
+            <td><input th:field="*{batchIngredients[__${itemStat.index}__].time}" /></td>
+            <td>
+                <select th:field="*{batchIngredients[__${itemStat.index}__].techniqueType}">
+                    <option th:value="0" text="Please Select" disabled selected></option>
+                    <option th:each="typeOpt : ${T(com.agh.database.brewingdatabaseapp.model.TechniqueType).values()}"
+                            th:value="${typeOpt}" th:text="${typeOpt}"></option>
+                </select>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
     <div>
         <div style="padding: 10px">
             <button type="submit">Add Batch</button>
         </div>
     </div>
 </form>
+
+
+
 </body>
 </html>

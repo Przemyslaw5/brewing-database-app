@@ -1,6 +1,7 @@
 package com.agh.database.brewingdatabaseapp.services;
 
 import com.agh.database.brewingdatabaseapp.model.Batch;
+import com.agh.database.brewingdatabaseapp.model.Freezer;
 import com.agh.database.brewingdatabaseapp.repositories.BatchRepository;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,10 @@ public class BatchService implements MongoService<Batch, String> {
         return batchRepository.findByNameStartingWith(s);
     }
 
+    public Batch findByName(String s){
+        return batchRepository.findByName(s);
+    }
+
     @Override
     public Batch save(Batch object) {
         return batchRepository.save(object);
@@ -55,5 +60,15 @@ public class BatchService implements MongoService<Batch, String> {
             freezerNames.add(batch.getFreezer().getName());
         }
         return freezerNames;
+    }
+
+    public Freezer getFreezerByName(String name){
+        Set<Batch> batches = this.findAll();
+        for (Batch batch : batches) {
+            System.out.println(name);
+            if(name.equals(batch.getFreezer().getName()))
+                return batch.getFreezer();
+        }
+        return new Freezer();
     }
 }

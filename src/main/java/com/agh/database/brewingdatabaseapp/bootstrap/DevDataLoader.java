@@ -61,7 +61,7 @@ public class DevDataLoader implements CommandLineRunner {
 //        ingredient2.setName("Drozdze polnocne");
 //        ingredient2.setIngredientType(IngredientType.YEAST);
 //        ingredient2.setDescription("Świezutkie");
-//        BatchIngredient batchIngredient1 = new BatchIngredient(batch1.getId(), ingredient1.getId(), ingredient1.getName(), 45, LocalDate.now(), TechniqueType.BOIL);
+//        BatchIngredient batchIngredient1 = new BatchIngredient(batch1.getId(), ingredient1.getId(), ingredient1.getName(), 45, 573, TechniqueType.BOIL);
 //        ingredient1.addBatchIngredient(batchIngredient1);
 //        ingredient2.addBatchIngredient(batchIngredient1);
 //
@@ -73,7 +73,7 @@ public class DevDataLoader implements CommandLineRunner {
 //        ingredient4.setName("Sol morska");
 //        ingredient4.setIngredientType(IngredientType.OTHER);
 //        ingredient4.setDescription("Kupiona w sklepie u Jadzi");
-//        BatchIngredient batchIngredient2 = new BatchIngredient(batch1.getId(), ingredient4.getId(), ingredient4.getName(), 124, LocalDate.now(), TechniqueType.DRY);
+//        BatchIngredient batchIngredient2 = new BatchIngredient(batch1.getId(), ingredient4.getId(), ingredient4.getName(), 124, 53, TechniqueType.DRY);
 //        ingredient3.addBatchIngredient(batchIngredient2);
 //        ingredient4.addBatchIngredient(batchIngredient2);
 //

@@ -5,6 +5,11 @@
     <title>Title</title>
 </head>
 <body>
+
+<!--NAVBAR ADDING-->
+<div th:insert="fragments/header :: navbar"></div>
+
+
 <h2>Ingredeint Details</h2>
 
 <table th:object="${ingredient}">

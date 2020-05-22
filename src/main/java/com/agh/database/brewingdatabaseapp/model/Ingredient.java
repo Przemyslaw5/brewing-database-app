@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,8 +21,13 @@ public class Ingredient {
 
     @Id
     private String id;
+    @NotNull
+    @Size(min=3, max=20, message = "Name must be between 3 and 20 characters.")
     private String name;
+    @NotNull
     private IngredientType ingredientType;
+    @NotNull
+    @Size(min=7, max=100, message = "Description must be between 7 and 100 characters.")
     private String description;
     private List<BatchIngredient> batchIngredients;
     private List<Inventory> inventories;

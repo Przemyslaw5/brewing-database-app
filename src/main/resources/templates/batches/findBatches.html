@@ -6,6 +6,9 @@
 </head>
 <body>
 
+<!--NAVBAR ADDING-->
+<div th:insert="fragments/header :: navbar"></div>
+
 <h2>Find Batches</h2>
 
 <form th:object="${batch}" th:action="@{/batches}" method="get">
@@ -27,6 +30,7 @@
 </form>
 
 <a th:href="@{/batches/new}">Add Batch</a>
+
 
 </body>
 </html>

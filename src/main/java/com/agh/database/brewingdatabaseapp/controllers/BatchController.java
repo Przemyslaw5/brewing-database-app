@@ -3,6 +3,7 @@ package com.agh.database.brewingdatabaseapp.controllers;
 import com.agh.database.brewingdatabaseapp.model.Batch;
 import com.agh.database.brewingdatabaseapp.model.Log;
 import com.agh.database.brewingdatabaseapp.services.BatchService;
+import com.agh.database.brewingdatabaseapp.services.FreezerService;
 import com.agh.database.brewingdatabaseapp.services.IngredientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +23,12 @@ public class BatchController {
 
     private final BatchService batchService;
     private final IngredientService ingredientService;
+    private final FreezerService freezerService;
 
-    public BatchController(BatchService batchService, IngredientService ingredientService){
+    public BatchController(BatchService batchService, IngredientService ingredientService, FreezerService freezerService){
         this.batchService = batchService;
         this.ingredientService = ingredientService;
+        this.freezerService = freezerService;
     }
 
     @GetMapping("batches/find")
@@ -40,24 +43,19 @@ public class BatchController {
         List<Batch> matchingBatches;
 
         if (batch.getName() == null) {
-            matchingBatches = this.batchService.findByNameStartingWith("b");
+            matchingBatches = this.batchService.findByNameStartingWith("");
         }
         else{
-            System.out.println("BEFORE" + batch.getName());
             matchingBatches = this.batchService.findByNameStartingWith(batch.getName());
-            System.out.println("AFTER" + batch.getName());
         }
-
 
         if (matchingBatches.isEmpty()) {
             result.rejectValue("name", "notFound", "There is no batch of beer with this name.");
             return "batches/findBatches";
         }
-//        else if (results.size() == 1) {
-//            // 1 owner found
-//            owner = results.iterator().next();
-//            return "redirect:/owners/" + owner.getId();
-//        }
+        else if (matchingBatches.size() == 1) {
+            return "redirect:/batches/" + batch.getName();
+        }
         else {
             model.put("matchingbatches", matchingBatches);
             return "batches/batchesList";
@@ -67,7 +65,7 @@ public class BatchController {
     @GetMapping("/batches/new")
     public String initCreationForm(Model model) {
         Batch batch = new Batch();
-        Set<String> freezerNames = this.batchService.getUniqueFreezerNames();
+        Set<String> freezerNames = this.freezerService.getUniqueFreezerNames();
         batch.setBatchIngredients(ingredientService.prepareBatchIngredientsList());
         model.addAttribute("batch", batch);
         model.addAttribute("freezers", freezerNames);
@@ -79,14 +77,14 @@ public class BatchController {
         if (result.hasErrors()) {
             System.out.println(result.getAllErrors());
             System.out.println("NIEPOPRAWNE DANE?");
-            Set<String> freezerNames = this.batchService.getUniqueFreezerNames();
+            Set<String> freezerNames = this.freezerService.getUniqueFreezerNames();
             batch.setBatchIngredients(ingredientService.prepareBatchIngredientsList());
             model.addAttribute("freezers", freezerNames);
             return "batches/new";
         }
         else {
             batch.setBatchIngredients(ingredientService.getBatchIngredientsList(batch.getBatchIngredients(), batch));
-            batch.setFreezer(batchService.getFreezerByName(batch.getFreezer().getName()));
+            batch.setFreezer(freezerService.getFreezerByName(batch.getFreezer().getName()));
             this.batchService.save(batch);
             return "redirect:/batches/" + batch.getName();
         }
@@ -123,4 +121,5 @@ public class BatchController {
             return "redirect:/batches/" + batchName;
         }
     }
+
 }

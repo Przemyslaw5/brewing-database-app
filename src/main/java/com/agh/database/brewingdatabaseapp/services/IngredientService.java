@@ -72,4 +72,9 @@ public class IngredientService implements MongoService<Ingredient, String> {
     public void deleteById(String s) {
         ingredientRepository.deleteById(s);
     }
+
+    @Override
+    public void deleteAll() {
+        ingredientRepository.deleteAll();
+    }
 }

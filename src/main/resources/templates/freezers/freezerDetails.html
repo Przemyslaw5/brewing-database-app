@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--NAVBAR ADDING-->
+<div th:insert="fragments/header :: navbar"></div>
+
+<table th:object="${freezer}">
+    <tr>
+        <th>Name</th>
+        <td><b th:text="${freezer.name}"></b></td>
+    </tr>
+    <tr>
+        <th>City</th>
+        <td><b th:text="${freezer.city}"></b></td>
+    </tr>
+    <tr>
+        <th>Address</th>
+        <td><b th:text="${freezer.address}"></b></td>
+    </tr>
+</table>
+
+
+<table>
+    <thead>
+    <tr>
+        <th style="width: 200px;">Name</th>
+        <th style="width: 200px;">Batch Type</th>
+        <th style="width: 200px;">Brewed Date</th>
+        <th style="width: 200px;">Bottled Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="batch : ${batches}">
+        <td>
+            <a th:href="@{/batches/__${batch.name}__}" th:text="${batch.name}"/></a>
+        </td>
+        <td><b th:text="${batch.batchType}"></b></td>
+        <td><b th:text="${batch.brewedDate}"></b></td>
+        <td><b th:text="${batch.bottledDate}"></b></td>
+    </tr>
+    </tbody>
+
+</table>
+
+<a th:href="@{/batches/new}">Add Batch</a>
+
+
+</body>
+</html>

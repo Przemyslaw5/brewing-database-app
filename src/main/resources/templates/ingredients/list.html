@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--NAVBAR ADDING-->
+<div th:insert="fragments/header :: navbar"></div>
+
+
+<table id="batches" class="table table-striped">
+    <thead>
+    <tr>
+        <th style="width: 200px;">Name</th>
+        <th style="width: 200px;">Type</th>
+        <th style="width: 200px;">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="ingredient : ${ingredients}">
+        <td>
+            <a th:href="@{/ingredients/__${ingredient.name}__}" th:text="${ingredient.name}"/></a>
+        </td>
+        <td th:text="${ingredient.ingredientType}"/>
+        <td th:text="${ingredient.description}"/>
+    </tr>
+    </tbody>
+</table>
+
+<br/>
+<br/>
+<br/>
+
+<a th:href="@{/ingredients/new}">Add Ingredient</a>
+
+</body>
+</html>

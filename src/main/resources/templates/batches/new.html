@@ -6,6 +6,9 @@
 </head>
 <body>
 
+<!--NAVBAR ADDING-->
+<div th:insert="fragments/header :: navbar"></div>
+
 <h2>Batch</h2>
 <form th:object="${batch}" method="post">
     <div>

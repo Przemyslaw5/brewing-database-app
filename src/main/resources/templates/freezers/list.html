@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Freezers</title>
+</head>
+
+<body>
+
+<!--NAVBAR ADDING-->
+<div th:insert="fragments/header :: navbar"></div>
+
+<h2>Freezers</h2>
+
+
+<a th:href="@{/freezers/new}">Add Freezer</a>
+
+
+<table id="batches" class="table table-striped">
+    <thead>
+    <tr>
+        <th style="width: 200px;">Name</th>
+        <th style="width: 200px;">City</th>
+        <th style="width: 200px;">Address</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="freezer : ${freezers}">
+        <td>
+            <a th:href="@{/freezers/__${freezer.name}__}" th:text="${freezer.name}"/></a>
+        </td>
+        <td th:text="${freezer.city}"/>
+        <td th:text="${freezer.address}"/>
+    </tr>
+    </tbody>
+</table>
+
+
+
+</body>
+</html>

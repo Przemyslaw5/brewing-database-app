@@ -3,6 +3,7 @@ package com.agh.database.brewingdatabaseapp.services;
 import com.agh.database.brewingdatabaseapp.model.Batch;
 import com.agh.database.brewingdatabaseapp.model.Freezer;
 import com.agh.database.brewingdatabaseapp.repositories.BatchRepository;
+import com.agh.database.brewingdatabaseapp.repositories.IngredientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -14,7 +15,7 @@ public class BatchService implements MongoService<Batch, String> {
 
     private final BatchRepository batchRepository;
 
-    public BatchService(BatchRepository batchRepository) {
+    public BatchService(BatchRepository batchRepository, IngredientRepository ingredientRepository) {
         this.batchRepository = batchRepository;
     }
 
@@ -53,22 +54,19 @@ public class BatchService implements MongoService<Batch, String> {
         batchRepository.deleteById(s);
     }
 
-    public Set<String> getUniqueFreezerNames(){
-        Set<Batch> batches = this.findAll();
-        Set<String> freezerNames = new HashSet<>();
-        for (Batch batch : batches) {
-            freezerNames.add(batch.getFreezer().getName());
-        }
-        return freezerNames;
+    @Override
+    public void deleteAll() {
+        batchRepository.deleteAll();
     }
 
-    public Freezer getFreezerByName(String name){
+    public Set<Batch> getAllBatchesFromFreezer(Freezer freezer){
+        Set<Batch> result = new HashSet<>();
         Set<Batch> batches = this.findAll();
-        for (Batch batch : batches) {
-            System.out.println(name);
-            if(name.equals(batch.getFreezer().getName()))
-                return batch.getFreezer();
+        for(Batch batch : batches){
+            if(freezer.equals(batch.getFreezer())){
+                result.add(batch);
+            }
         }
-        return new Freezer();
+        return result;
     }
 }

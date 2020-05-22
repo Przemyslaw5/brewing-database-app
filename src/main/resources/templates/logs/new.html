@@ -5,17 +5,9 @@
     <title>Title</title>
 </head>
 
-<!--private int id;-->
-<!--@NotNull-->
-<!--private LocalDate time;-->
-<!--@NotNull-->
-<!--private double temp_in;-->
-<!--@NotNull-->
-<!--private double temp_out;-->
-<!--@NotNull-->
-<!--private double temp_set;-->
-<!--@NotNull-->
-<!--private double epsilon;-->
+<!--NAVBAR ADDING-->
+<div th:insert="fragments/header :: navbar"></div>
+
 <body>
 <h2>Batch</h2>
 <form th:object="${log}" method="post">

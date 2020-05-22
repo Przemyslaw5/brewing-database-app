@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+<!--NAVBAR ADDING-->
+<div th:insert="fragments/header :: navbar"></div>
+
 
 <h2>Batches</h2>
 
@@ -30,10 +33,6 @@
             <td th:text="${batch.batchType}"/>
             <td th:text="${batch.brewedDate}"/>
             <td th:text="${batch.bottledDate}"/>
-    <!--        <td th:text="${batch.city}"/>-->
-    <!--        <td th:text="${batch.telephone}"/>-->
-    <!--        <td><span th:each="pet : ${owner.pets}" th:text="${pet.name} "/></td>-->
-        </tr>
     </tbody>
 </table>
 

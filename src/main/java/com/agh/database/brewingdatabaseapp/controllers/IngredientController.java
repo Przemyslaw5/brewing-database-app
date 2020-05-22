@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 @Controller
 @RequestMapping("ingredients")
@@ -24,27 +25,43 @@ public class IngredientController {
         this.ingredientService = ingredientService;
     }
 
-//    @ModelAttribute("ingredient")
-//    public Ingredient findOwner(@PathVariable("ingredientName") String ingredientName) {
-//        return this.ingredientService.findByName(ingredientName);
-//    }
+    @GetMapping("")
+    public String showAllIngredients(Model model){
+        Set<Ingredient> ingredientSet = ingredientService.findAll();
+        model.addAttribute("ingredients", ingredientSet);
+        return "ingredients/list";
+    }
+
+    @GetMapping("/new")
+    public String addNewIngredient(Model model){
+        Ingredient ingredient = new Ingredient();
+        model.addAttribute("ingredient", ingredient);
+        return "ingredients/new";
+    }
+
+    @PostMapping("/new")
+    public String saveNewIngredient(@Valid Ingredient ingredient, BindingResult result, Model model){
+        if (result.hasErrors()) {
+            model.addAttribute("ingredient", ingredient);
+            return "ingredients/new";
+        }
+        else{
+            ingredientService.save(ingredient);
+            return "redirect:/ingredients/" + ingredient.getName();
+        }
+    }
 
     @GetMapping("/{ingredientName}")
     public ModelAndView showBatch(@PathVariable("ingredientName") String ingredientName) {
-        System.out.println("CZY DOCHODZI");
         ModelAndView mav = new ModelAndView("ingredients/ingredientDetails");
-        System.out.println("CZY DOCHODZI" + ingredientName);
         Ingredient ingredient = this.ingredientService.findByName(ingredientName);
-        System.out.println("CZY DOCHODZI");
         mav.addObject(ingredient);
-        System.out.println("CZY DOCHODZI");
         return mav;
     }
 
     @GetMapping("{ingredientName}/new")
     public String initCreationForm(@PathVariable("ingredientName") String ingredientName, Model model) {
         Ingredient ingredient = ingredientService.findByName(ingredientName);
-        //System.out.println("SIEMA" + ingredient.getName());
         Inventory inventory = new Inventory();
         inventory.setIngredientName(ingredientName);
         ingredient.addInventory(inventory);
@@ -65,16 +82,5 @@ public class IngredientController {
             ingredientService.save(ingredient);
             return "redirect:/ingredients/{ingredientName}";
         }
-//
-//        if (result.hasErrors()) {
-//            Set<String> freezerNames = this.batchService.getUniqueFreezerNames();
-//            model.addAttribute("freezers", freezerNames);
-//            return "batches/new";
-//        }
-//        else {
-//            batch.setFreezer(batchService.getFreezerByName(batch.getFreezer().getName()));
-//            this.batchService.save(batch);
-//            return "redirect:/batches/" + batch.getName();
-//        }
     }
 }

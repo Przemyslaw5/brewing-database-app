@@ -2,11 +2,13 @@ package com.agh.database.brewingdatabaseapp.services;
 
 import com.agh.database.brewingdatabaseapp.model.Batch;
 import com.agh.database.brewingdatabaseapp.model.Freezer;
+import com.agh.database.brewingdatabaseapp.model.Mash;
 import com.agh.database.brewingdatabaseapp.repositories.BatchRepository;
 import com.agh.database.brewingdatabaseapp.repositories.IngredientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -68,5 +70,17 @@ public class BatchService implements MongoService<Batch, String> {
             }
         }
         return result;
+    }
+
+    public List<Mash> prepareMashesFromInputToBatch(List<Mash> mashes){
+        int step = 1;
+        List<Mash> mashesToBatch = new LinkedList<>();
+        for(Mash mash : mashes){
+            if(mash.getDurationMins() != 0 && mash.getTemp() != 0.0){
+                mash.setStep(step++);
+                mashesToBatch.add(mash);
+            }
+        }
+        return mashesToBatch;
     }
 }

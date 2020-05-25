@@ -2,6 +2,7 @@ package com.agh.database.brewingdatabaseapp.controllers;
 
 import com.agh.database.brewingdatabaseapp.model.Batch;
 import com.agh.database.brewingdatabaseapp.model.Log;
+import com.agh.database.brewingdatabaseapp.model.Mash;
 import com.agh.database.brewingdatabaseapp.services.BatchService;
 import com.agh.database.brewingdatabaseapp.services.FreezerService;
 import com.agh.database.brewingdatabaseapp.services.IngredientService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -66,6 +68,9 @@ public class BatchController {
     public String initCreationForm(Model model) {
         Batch batch = new Batch();
         Set<String> freezerNames = this.freezerService.getUniqueFreezerNames();
+        ArrayList<Mash> mashes = new ArrayList<>();
+        mashes.add(new Mash());
+        batch.setMashes(mashes);
         batch.setBatchIngredients(ingredientService.prepareBatchIngredientsList());
         model.addAttribute("batch", batch);
         model.addAttribute("freezers", freezerNames);
@@ -74,16 +79,20 @@ public class BatchController {
 
     @PostMapping("/batches/new")
     public String processCreationForm(@Valid Batch batch, BindingResult result, Model model) {
+        System.out.println(batch.getMashes().size());
         if (result.hasErrors()) {
             System.out.println(result.getAllErrors());
-            System.out.println("NIEPOPRAWNE DANE?");
             Set<String> freezerNames = this.freezerService.getUniqueFreezerNames();
+            ArrayList<Mash> mashes = new ArrayList<>();
+            mashes.add(new Mash());
+            batch.setMashes(mashes);
             batch.setBatchIngredients(ingredientService.prepareBatchIngredientsList());
             model.addAttribute("freezers", freezerNames);
             return "batches/new";
         }
         else {
             batch.setBatchIngredients(ingredientService.getBatchIngredientsList(batch.getBatchIngredients(), batch));
+            batch.setMashes(batchService.prepareMashesFromInputToBatch(batch.getMashes()));
             batch.setFreezer(freezerService.getFreezerByName(batch.getFreezer().getName()));
             this.batchService.save(batch);
             return "redirect:/batches/" + batch.getName();

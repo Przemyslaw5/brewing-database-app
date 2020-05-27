@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>DETAILS</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 
@@ -48,6 +49,7 @@
             <th style="width: 200px;">Temp in</th>
             <th style="width: 200px;">Temp out</th>
             <th style="width: 200px;">Epsilon</th>
+            <th style="width: 200px;">Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -58,6 +60,7 @@
             <td><b th:text="${log.temp_in}"></b></td>
             <td><b th:text="${log.temp_out}"></b></td>
             <td><b th:text="${log.epsilon}"></b></td>
+            <td><a th:href="@{{name}/logs/delete/{id}(name=${batch.name}, id=${log.id})}"><span style="cursor: pointer; color: #ff0000" class="material-icons">delete</span></a></td>
         </tr>
     </tbody>
 

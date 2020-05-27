@@ -32,6 +32,12 @@ public class Ingredient {
     private List<BatchIngredient> batchIngredients;
     private List<Inventory> inventories;
 
+    public Ingredient(String name, IngredientType ingredientType, String description) {
+        this.name = name;
+        this.ingredientType = ingredientType;
+        this.description = description;
+    }
+
     public void addBatchIngredient(BatchIngredient batchIngredient){
         if(this.batchIngredients == null){
             this.batchIngredients = new LinkedList<>();

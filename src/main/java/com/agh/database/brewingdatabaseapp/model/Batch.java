@@ -40,6 +40,15 @@ public class Batch {
     private List<Mash> mashes;
     private List<BatchIngredient> batchIngredients;
 
+    public Batch(String name, Freezer freezer, String style, BatchType batchType, LocalDate brewedDate, LocalDate bottledDate) {
+        this.name = name;
+        this.freezer = freezer;
+        this.style = style;
+        this.batchType = batchType;
+        this.brewedDate = brewedDate;
+        this.bottledDate = bottledDate;
+    }
+
     public void addLog(Log log){
         if(this.logs == null){
             this.logs = new LinkedList<>();
@@ -47,12 +56,7 @@ public class Batch {
         this.logs.add(log);
     }
 
-    private static int stepMash = 0;
-
     public void addMash(Mash mash){
-        mash.setStep(stepMash);
-        stepMash++;
-
         if(this.mashes == null){
             this.mashes = new LinkedList<>();
         }

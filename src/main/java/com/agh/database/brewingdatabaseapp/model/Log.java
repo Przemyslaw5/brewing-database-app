@@ -36,4 +36,8 @@ public class Log {
         this.temp_set = temp_set;
         this.epsilon = epsilon;
     }
+
+    public void setId(){
+        this.id = highestID++;
+    }
 }

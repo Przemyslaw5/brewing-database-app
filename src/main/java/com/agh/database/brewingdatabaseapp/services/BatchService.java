@@ -83,4 +83,14 @@ public class BatchService implements MongoService<Batch, String> {
         }
         return mashesToBatch;
     }
+
+    public void deleteLog(String batchName, int id){
+        Batch batch = this.findByName(batchName);
+        for(int i = 0; i < batch.getLogs().size(); i++){
+            if(batch.getLogs().get(i).getId() == id){
+                batch.getLogs().remove(i);
+            }
+        }
+        this.save(batch);
+    }
 }

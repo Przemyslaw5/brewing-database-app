@@ -42,7 +42,6 @@ public class IngredientService implements MongoService<Ingredient, String> {
         for(BatchIngredient b : batchIngredients){
             if(b.getAmount() != 0){
                 b.setBatchID(batch.getId());
-                b.setIngredientID(this.findByName(b.getIngredientName()).getId());
                 batchIngredientList.add(b);
             }
         }

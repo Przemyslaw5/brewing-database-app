@@ -56,7 +56,7 @@ public class BatchController {
             return "batches/findBatches";
         }
         else if (matchingBatches.size() == 1) {
-            return "redirect:/batches/" + batch.getName();
+            return "redirect:/batches/" + matchingBatches.get(0).getName();
         }
         else {
             model.put("matchingbatches", matchingBatches);
@@ -79,9 +79,7 @@ public class BatchController {
 
     @PostMapping("/batches/new")
     public String processCreationForm(@Valid Batch batch, BindingResult result, Model model) {
-        System.out.println(batch.getMashes().size());
         if (result.hasErrors()) {
-            System.out.println(result.getAllErrors());
             Set<String> freezerNames = this.freezerService.getUniqueFreezerNames();
             ArrayList<Mash> mashes = new ArrayList<>();
             mashes.add(new Mash());
@@ -91,6 +89,8 @@ public class BatchController {
             return "batches/new";
         }
         else {
+            this.batchService.save(batch);
+            batch = this.batchService.findByName(batch.getName());
             batch.setBatchIngredients(ingredientService.getBatchIngredientsList(batch.getBatchIngredients(), batch));
             batch.setMashes(batchService.prepareMashesFromInputToBatch(batch.getMashes()));
             batch.setFreezer(freezerService.getFreezerByName(batch.getFreezer().getName()));
@@ -125,10 +125,19 @@ public class BatchController {
         }
         else{
             Batch batch = batchService.findByName(batchName);
+            log.setId();
             batch.addLog(log);
             batchService.save(batch);
             return "redirect:/batches/" + batchName;
         }
+    }
+
+    @GetMapping("/batches/{batchName}/logs/delete/{id}")
+    public String deleteLogInBatch(@PathVariable("batchName") String batchName, @PathVariable("id") int id){
+
+        this.batchService.deleteLog(batchName, id);
+
+        return "redirect:/batches/" + batchName;
     }
 
 }

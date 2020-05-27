@@ -83,4 +83,22 @@ public class IngredientController {
             return "redirect:/ingredients/{ingredientName}";
         }
     }
+
+    @GetMapping("{ingredientName}/edit")
+    public String initUpdateOwnerForm(@PathVariable("ingredientName") String ingredientName, Model model) {
+        Ingredient ingredient = this.ingredientService.findByName(ingredientName);
+        model.addAttribute("ingredient", ingredient);
+        return "ingredients/edit";
+    }
+
+    @PostMapping("{ingredientName}/edit")
+    public String processUpdateOwnerForm(@Valid Ingredient ingredient, BindingResult result, @PathVariable("ingredientName") String ingredientName) {
+        if (result.hasErrors()) {
+            return "ingredients/edit";
+        }
+        else {
+            this.ingredientService.save(ingredient);
+            return "redirect:/ingredients/{ingredientName}";
+        }
+    }
 }

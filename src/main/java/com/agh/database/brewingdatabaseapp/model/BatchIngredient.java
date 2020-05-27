@@ -12,7 +12,6 @@ import lombok.Setter;
 public class BatchIngredient {
 
     private String batchID;
-    private String ingredientID;
     private String ingredientName;
     private int amount;
     private int time;

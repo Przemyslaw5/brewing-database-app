@@ -38,33 +38,46 @@
     </tr>
 </table>
 
+<div>
+    <div id="logs-in-table">
+        <table>
+            <thead>
+            <tr>
+                <th style="width: 200px;">ID</th>
+                <th style="width: 200px;">Time</th>
+                <th style="width: 200px;">Temp Set</th>
+                <th style="width: 200px;">Temp in</th>
+                <th style="width: 200px;">Temp out</th>
+                <th style="width: 200px;">Epsilon</th>
+                <th style="width: 200px;">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="log : ${batch.logs}">
+                <td><b th:text="${log.id}"></b></td>
+                <td><b th:text="${log.time}"></b></td>
+                <td><b th:text="${log.temp_set}"></b></td>
+                <td><b th:text="${log.temp_in}"></b></td>
+                <td><b th:text="${log.temp_out}"></b></td>
+                <td><b th:text="${log.epsilon}"></b></td>
+                <td><a th:href="@{{name}/logs/delete/{id}(name=${batch.name}, id=${log.id})}"><span style="cursor: pointer; color: #ff0000" class="material-icons">delete</span></a></td>
+            </tr>
+            </tbody>
 
+        </table>
+        <button onclick="click_in_table()">Show Chart</button>
+    </div>
+    <div id="logs-in-chart" style="display: none">
+        <figure class="highcharts-figure">
+            <div id="container"></div>
+        </figure>
+        <button onclick="click_in_chart()">Show Chart</button>
+    </div>
+
+
+</div>
 <br /><br /><br />
-<table>
-    <thead>
-        <tr>
-            <th style="width: 200px;">ID</th>
-            <th style="width: 200px;">Time</th>
-            <th style="width: 200px;">Temp Set</th>
-            <th style="width: 200px;">Temp in</th>
-            <th style="width: 200px;">Temp out</th>
-            <th style="width: 200px;">Epsilon</th>
-            <th style="width: 200px;">Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="log : ${batch.logs}">
-            <td><b th:text="${log.id}"></b></td>
-            <td><b th:text="${log.time}"></b></td>
-            <td><b th:text="${log.temp_set}"></b></td>
-            <td><b th:text="${log.temp_in}"></b></td>
-            <td><b th:text="${log.temp_out}"></b></td>
-            <td><b th:text="${log.epsilon}"></b></td>
-            <td><a th:href="@{{name}/logs/delete/{id}(name=${batch.name}, id=${log.id})}"><span style="cursor: pointer; color: #ff0000" class="material-icons">delete</span></a></td>
-        </tr>
-    </tbody>
 
-</table>
 <br />
 <a th:href="@{{name}/logs/new(name=${batch.name})}">Add New Log</a>
 
@@ -89,7 +102,6 @@
 
 </table>
 <br />
-<!--<a th:href="@{{name}/logs/new(name=${batch.name})}">Add New Log</a>-->
 
 
 <br /><br /><br />
@@ -105,7 +117,7 @@
     <tbody>
 
     <tr th:each="batchIngredient : ${batch.batchIngredients}">
-        <td><b><a th:href="@{/ingredients/__${batchIngredient.ingredientName}__}"  th:text="${batchIngredient.ingredientName}"/></a></b></td>
+        <td><b><a th:href="@{/ingredients/__${batchIngredient.ingredientName}__}"  th:text="${batchIngredient.ingredientName}"></a></b></td>
         <td><b th:text="${batchIngredient.amount}"></b></td>
         <td><b th:text="${batchIngredient.time}"></b></td>
         <td><b th:text="${batchIngredient.techniqueType}"></b></td>
@@ -114,6 +126,79 @@
 
 </table>
 <br />
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<script>
+    Highcharts.chart('container', {
+
+        title: {
+            text: 'Logs'
+        },
+
+        subtitle: {
+            text: '[[${batch.name}]]'
+        },
+
+        yAxis: {
+            title: {
+                text: 'Temperature (\xB0C)'
+            }
+        },
+
+        xAxis: {
+            categories: "[[${jsonArrayData}]]".replace(/(&quot\;)/g,"").replace('[',"").replace(']', "").split(','),
+            labels: {
+                rotation: -45
+            }
+        },
+
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+        series: [{
+            name: 'AverageTemp',
+            data: [[${jsonArrayAverageTemp}]]
+        }, {
+            name: 'TempSet',
+            data: [[${jsonArrayTempSet}]]
+        }],
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+
+    });
+</script>
+
+<script>
+    function click_in_table() {
+        document.getElementById('logs-in-table').style.display="none";
+        document.getElementById('logs-in-chart').style.display="block";
+    }
+    function click_in_chart() {
+        document.getElementById('logs-in-chart').style.display="none";
+        document.getElementById('logs-in-table').style.display="block";
+    }
+</script>
 
 </body>
 </html>

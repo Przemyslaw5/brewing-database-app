@@ -6,6 +6,7 @@ import com.agh.database.brewingdatabaseapp.model.Mash;
 import com.agh.database.brewingdatabaseapp.services.BatchService;
 import com.agh.database.brewingdatabaseapp.services.FreezerService;
 import com.agh.database.brewingdatabaseapp.services.IngredientService;
+import com.google.gson.JsonArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -93,19 +94,32 @@ public class BatchController {
             batch = this.batchService.findByName(batch.getName());
             batch.setBatchIngredients(ingredientService.getBatchIngredientsList(batch.getBatchIngredients(), batch));
             batch.setMashes(batchService.prepareMashesFromInputToBatch(batch.getMashes()));
-            batch.setFreezer(freezerService.getFreezerByName(batch.getFreezer().getName()));
+            batch.setFreezer(freezerService.findByName(batch.getFreezer().getName()));
             this.batchService.save(batch);
             return "redirect:/batches/" + batch.getName();
         }
     }
 
     @GetMapping("/batches/{batchName}")
-    public ModelAndView showBatch(@PathVariable("batchName") String batchName) {
+    public String showBatch(@PathVariable("batchName") String batchName, Model model) {
         ModelAndView mav = new ModelAndView("batches/batchDetails");
         Batch batch = this.batchService.findByName(batchName);
 
-        mav.addObject(batch);
-        return mav;
+        JsonArray jsonArrayAverageTemp = new JsonArray();
+        JsonArray jsonArrayTempSet = new JsonArray();
+        JsonArray jsonArrayData = new JsonArray();
+        batch.getLogs().forEach(log -> {
+            jsonArrayData.add(log.getTime().toString());
+            jsonArrayAverageTemp.add((log.getTemp_in() + log.getTemp_out()) / 2);
+            jsonArrayTempSet.add(log.getTemp_set());
+        });
+
+        model.addAttribute("batch", batch);
+        model.addAttribute("jsonArrayData", jsonArrayData);
+        model.addAttribute("jsonArrayAverageTemp", jsonArrayAverageTemp);
+        model.addAttribute("jsonArrayTempSet", jsonArrayTempSet);
+
+        return "batches/batchDetails";
     }
 
     @GetMapping("/batches/{batchName}/logs/new")
@@ -139,5 +153,4 @@ public class BatchController {
 
         return "redirect:/batches/" + batchName;
     }
-
 }

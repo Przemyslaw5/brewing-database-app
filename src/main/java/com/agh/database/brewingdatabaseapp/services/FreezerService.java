@@ -23,6 +23,10 @@ public class FreezerService implements MongoService<Freezer, String> {
         return freezers;
     }
 
+    public Freezer findByName(String s){
+        return freezerRepository.findByName(s);
+    }
+
     @Override
     public Freezer findById(String s) {
         return freezerRepository.findById(s).orElse(null);
@@ -55,26 +59,5 @@ public class FreezerService implements MongoService<Freezer, String> {
             freezerNames.add(freezer.getName());
         }
         return freezerNames;
-    }
-
-    public Set<Freezer> getAllFreezers(){
-        Set<Freezer> freezers = this.findAll();
-        Set<String> names = new HashSet<>();
-        for(Freezer freezer : freezers){
-            names.add(freezer.getName());
-            if(names.size() != freezers.size()){
-                freezers.add(freezer);
-            }
-        }
-        return freezers;
-    }
-
-    public Freezer getFreezerByName(String name){
-        Set<Freezer> freezers = this.findAll();
-        for (Freezer freezer : freezers) {
-            if(name.equals(freezer.getName()))
-                return freezer;
-        }
-        return new Freezer();
     }
 }

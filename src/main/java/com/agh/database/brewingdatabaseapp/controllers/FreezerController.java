@@ -28,14 +28,14 @@ public class FreezerController {
 
     @GetMapping("freezers")
     public String showListAllFreezers(Model model){
-        Set<Freezer> freezerNames = freezerService.getAllFreezers();
+        Set<Freezer> freezerNames = freezerService.findAll();
         model.addAttribute("freezers", freezerNames);
         return "freezers/list";
     }
 
     @GetMapping("/freezers/{freezerName}")
     public String showFreezer(@PathVariable("freezerName") String freezerName, Model model) {
-        Freezer freezer = this.freezerService.getFreezerByName(freezerName);
+        Freezer freezer = this.freezerService.findByName(freezerName);
         Set<Batch> batches = batchService.getAllBatchesFromFreezer(freezer);
         model.addAttribute("freezer", freezer);
         model.addAttribute("batches", batches);

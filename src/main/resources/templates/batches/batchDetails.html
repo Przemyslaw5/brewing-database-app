@@ -39,7 +39,7 @@
 </table>
 
 <div>
-    <div id="logs-in-table">
+    <div id="logs-in-table" style="display: block">
         <table>
             <thead>
             <tr>
@@ -65,15 +65,14 @@
             </tbody>
 
         </table>
-        <button onclick="click_in_table()">Show Chart</button>
     </div>
     <div id="logs-in-chart" style="display: none">
         <figure class="highcharts-figure">
             <div id="container"></div>
         </figure>
-        <button onclick="click_in_chart()">Show Logs</button>
     </div>
 
+    <button id="button_log" onclick="change_log_content()">Show logs</button>
 
 </div>
 <br /><br /><br />
@@ -190,13 +189,17 @@
 </script>
 
 <script>
-    function click_in_table() {
-        document.getElementById('logs-in-table').style.display="none";
-        document.getElementById('logs-in-chart').style.display="block";
-    }
-    function click_in_chart() {
-        document.getElementById('logs-in-chart').style.display="none";
-        document.getElementById('logs-in-table').style.display="block";
+    function change_log_content() {
+        const div1 = document.getElementById("logs-in-table");
+        if (div1.style.display === "block") {
+            document.getElementById('button_log').textContent = "Show chart"
+            document.getElementById('logs-in-table').style.display = "none";
+            document.getElementById('logs-in-chart').style.display = "block";
+        } else {
+            document.getElementById('button_log').textContent="Show logs"
+            document.getElementById('logs-in-chart').style.display="none";
+            document.getElementById('logs-in-table').style.display="block";
+        }
     }
 </script>
 

@@ -14,7 +14,7 @@
 <div th:insert="fragments/header :: navbar"></div>
 
 
-<h2>Batch Details</h2>
+<h2 class="my-3 text-center">Batch Details</h2>
 
 
 <div class="container">
@@ -75,13 +75,12 @@
         </figure>
     </div>
 
-    <button class="btn btn-outline-success" id="button_log" onclick="change_log_content()">Show logs</button>
+    <button class="btn btn-outline-info" id="button_log" onclick="change_log_content()">Show logs</button>
 
 </div>
-<br /><br /><br />
+<br/><br/>
 
-<br />
-<a th:href="@{{name}/logs/new(name=${batch.name})}">Add New Log</a>
+<a class="btn btn-outline-success" th:href="@{{name}/logs/new(name=${batch.name})}">Add New Log</a>
 
 
 

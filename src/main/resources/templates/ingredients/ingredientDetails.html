@@ -14,9 +14,9 @@
 <div th:insert="fragments/header :: navbar"></div>
 
 
-<h2>Ingredeint Details</h2>
-
-<table th:object="${ingredient}">
+<h2 class="my-3 text-center">Ingredeint Details</h2>
+<div class="container">
+<table class="table" th:object="${ingredient}">
     <tr>
         <th>Name</th>
         <td><b th:text="${ingredient.name}"></b></td>
@@ -32,12 +32,12 @@
 </table>
 
 <br /><br /><br />
-<a th:href="@{/ingredients/{name}/edit(name=${ingredient.name})}" class="btn btn-default">Edit Ingredient</a>
+<a th:href="@{/ingredients/{name}/edit(name=${ingredient.name})}" class="btn btn-outline-info">Edit Ingredient</a>
 <br /><br /><br />
 
 
-<table>
-    <thead>
+<table class="table">
+    <thead class="thead-light">
     <tr>
         <th style="width: 200px;">ID</th>
         <th style="width: 200px;">Amount</th>
@@ -59,8 +59,8 @@
 
 </table>
 
-<a th:href="@{/ingredients/{name}/new(name=${ingredient.name})}" class="btn btn-default">Add New Inventory</a>
-
+<a th:href="@{/ingredients/{name}/new(name=${ingredient.name})}" class="btn btn-outline-success">Add New Inventory</a>
+</div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

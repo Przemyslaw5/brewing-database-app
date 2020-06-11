@@ -12,8 +12,8 @@
 
 <!--NAVBAR ADDING-->
 <div th:insert="fragments/header :: navbar"></div>
-
-<table th:object="${freezer}">
+<div class="container mt-5">
+<table class="table" th:object="${freezer}">
     <tr>
         <th>Name</th>
         <td><b th:text="${freezer.name}"></b></td>
@@ -29,8 +29,8 @@
 </table>
 
 
-<table>
-    <thead>
+<table class="table">
+    <thead class="thead-light">
     <tr>
         <th style="width: 200px;">Name</th>
         <th style="width: 200px;">Batch Type</th>
@@ -51,8 +51,8 @@
 
 </table>
 
-<a th:href="@{/batches/new}">Add Batch</a>
-
+<a class="btn btn-outline-success" th:href="@{/batches/new}">Add Batch</a>
+</div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

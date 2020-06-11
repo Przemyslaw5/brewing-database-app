@@ -13,8 +13,8 @@
 <div th:insert="fragments/header :: navbar"></div>
 
 
-<h2>Batches</h2>
-
+<h2 class="my-3 text-center">Batches</h2>
+<div class="container">
 <table id="batches" class="table table-striped">
     <thead>
         <tr>
@@ -39,7 +39,7 @@
             <td th:text="${batch.bottledDate}"></td>
     </tbody>
 </table>
-
+</div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

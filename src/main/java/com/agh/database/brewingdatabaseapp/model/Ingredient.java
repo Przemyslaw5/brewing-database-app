@@ -27,14 +27,20 @@ public class Ingredient {
     @NotNull
     private IngredientType ingredientType;
     @NotNull
+    private UnitIngredient unitIngredient;
+    @NotNull
+    private double unitsInStock;
+    @NotNull
     @Size(min=7, max=100, message = "Description must be between 7 and 100 characters.")
     private String description;
     private List<BatchIngredient> batchIngredients;
     private List<Inventory> inventories;
 
-    public Ingredient(String name, IngredientType ingredientType, String description) {
+    public Ingredient(String name, IngredientType ingredientType, UnitIngredient unitIngredient, double unitsInStock, String description) {
         this.name = name;
         this.ingredientType = ingredientType;
+        this.unitIngredient = unitIngredient;
+        this.unitsInStock = unitsInStock;
         this.description = description;
     }
 
@@ -43,12 +49,14 @@ public class Ingredient {
             this.batchIngredients = new LinkedList<>();
         }
         this.batchIngredients.add(batchIngredient);
+        this.unitsInStock -= batchIngredient.getAmount();
     }
 
     public void addInventory(Inventory inventory){
         if(this.inventories == null){
             this.inventories = new LinkedList<>();
         }
+        this.unitsInStock += inventory.getAmount();
         this.inventories.add(inventory);
     }
 }

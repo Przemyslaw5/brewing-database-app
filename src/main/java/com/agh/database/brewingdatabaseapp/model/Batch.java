@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,22 +31,20 @@ public class Batch {
     @NotNull
     private BatchType batchType;
     @NotNull(message = "You mast set brewed date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate brewedDate;
+    private String brewedDate;
     @NotNull(message = "You mast set bottled date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate bottledDate;
+    private String bottledDate;
     private List<Log> logs;
     private List<Mash> mashes;
     private List<BatchIngredient> batchIngredients;
 
-    public Batch(String name, Freezer freezer, String style, BatchType batchType, LocalDate brewedDate, LocalDate bottledDate) {
+    public Batch(String name, Freezer freezer, String style, BatchType batchType, LocalDateTime brewedDate, LocalDateTime bottledDate) {
         this.name = name;
         this.freezer = freezer;
         this.style = style;
         this.batchType = batchType;
-        this.brewedDate = brewedDate;
-        this.bottledDate = bottledDate;
+        this.brewedDate = brewedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        this.bottledDate = bottledDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));;
     }
 
     public void addLog(Log log){

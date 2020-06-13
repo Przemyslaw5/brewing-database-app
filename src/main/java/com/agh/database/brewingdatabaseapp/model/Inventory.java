@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -21,26 +21,26 @@ public class Inventory {
     private int id;
     private String ingredientName;
     @NotNull(message = "You mast set bought date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate timeBought;
+    private String timeBought;
     @NotNull
     @Min(value = 1, message = "Amount must be higher")
-    private int amount;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate bestBefore;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate opened;
+    private double amount;
+    private double amountAvailable;
+    private String bestBefore;
+    private String opened;
 
     public void setId() {
         this.id = highestID++;
     }
 
-    public Inventory(String ingredientName, LocalDate timeBought, int amount, LocalDate bestBefore, LocalDate opened) {
+    public Inventory(String ingredientName, LocalDateTime timeBought, int amount, LocalDateTime bestBefore, LocalDateTime opened) {
         this.id = highestID++;
         this.ingredientName = ingredientName;
-        this.timeBought = timeBought;
-        this.amount = amount;
-        this.bestBefore = bestBefore;
-        this.opened = opened;
+        this.timeBought = timeBought.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        this.amountAvailable = this.amount = amount;
+        if(bestBefore == null) this.bestBefore = "";
+        else this.bestBefore = bestBefore.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        if(opened == null) this.opened = "";
+        else this.opened = opened.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 }

@@ -10,10 +10,11 @@ import com.google.gson.JsonArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -75,26 +76,50 @@ public class BatchController {
         batch.setBatchIngredients(ingredientService.prepareBatchIngredientsList());
         model.addAttribute("batch", batch);
         model.addAttribute("freezers", freezerNames);
+        model.addAttribute("amountError", "");
+        model.addAttribute("amountAvailable", ingredientService.getAmountAvailable(batch.getBatchIngredients()));
         return "batches/new";
     }
 
     @PostMapping("/batches/new")
     public String processCreationForm(@Valid Batch batch, BindingResult result, Model model) {
-        if (result.hasErrors()) {
+        Batch b = batchService.findByName(batch.getName());
+        int flagDate = batch.getBottledDate().compareTo(batch.getBrewedDate());
+        boolean flagAmounts = ingredientService.checkAmounts(batch);
+        if (result.hasErrors() || b != null || flagDate < 0 || flagAmounts) {
+            String amountError = "";
+            if (b != null) {
+                FieldError nameError = new FieldError("name", "name", "Batch with that name already exists.");
+                result.addError(nameError);
+            }
+            if(flagDate < 0){
+                FieldError dateError = new FieldError("brewedDate", "brewedDate", "Beer is brewed before bottling.");
+                result.addError(dateError);
+            }
+            if(flagAmounts){
+                amountError = "Make sure there is such a quantity in stock";
+            }
             Set<String> freezerNames = this.freezerService.getUniqueFreezerNames();
             ArrayList<Mash> mashes = new ArrayList<>();
-            mashes.add(new Mash());
+            for(int i = 0; i < batch.getMashes().size(); i++){
+                mashes.add(new Mash());
+            }
             batch.setMashes(mashes);
             batch.setBatchIngredients(ingredientService.prepareBatchIngredientsList());
+            model.addAttribute("amountError", amountError);
             model.addAttribute("freezers", freezerNames);
+            model.addAttribute("amountAvailable", ingredientService.getAmountAvailable(batch.getBatchIngredients()));
             return "batches/new";
         }
         else {
+            result.addError(new ObjectError("uniqueName", "Batch with " + batch.getName() + " name already exists."));
             this.batchService.save(batch);
             batch = this.batchService.findByName(batch.getName());
             batch.setBatchIngredients(ingredientService.getBatchIngredientsList(batch.getBatchIngredients(), batch));
             batch.setMashes(batchService.prepareMashesFromInputToBatch(batch.getMashes()));
             batch.setFreezer(freezerService.findByName(batch.getFreezer().getName()));
+            batch.setBottledDate(batch.getBottledDate().replace("T", " "));
+            batch.setBrewedDate(batch.getBrewedDate().replace("T", " "));
             this.batchService.save(batch);
             return "redirect:/batches/" + batch.getName();
         }
@@ -102,23 +127,21 @@ public class BatchController {
 
     @GetMapping("/batches/{batchName}")
     public String showBatch(@PathVariable("batchName") String batchName, Model model) {
-        ModelAndView mav = new ModelAndView("batches/batchDetails");
         Batch batch = this.batchService.findByName(batchName);
-
         JsonArray jsonArrayAverageTemp = new JsonArray();
         JsonArray jsonArrayTempSet = new JsonArray();
         JsonArray jsonArrayData = new JsonArray();
-        batch.getLogs().forEach(log -> {
-            jsonArrayData.add(log.getTime().toString());
-            jsonArrayAverageTemp.add((log.getTemp_in() + log.getTemp_out()) / 2);
-            jsonArrayTempSet.add(log.getTemp_set());
-        });
-
+        if(batch.getLogs() != null){
+            batch.getLogs().forEach(log -> {
+                jsonArrayData.add(log.getTime());
+                jsonArrayAverageTemp.add(Math.round((log.getTemp_in() + log.getTemp_out()) * 50) / 100.0);
+                jsonArrayTempSet.add(log.getTemp_set());
+            });
+        }
         model.addAttribute("batch", batch);
         model.addAttribute("jsonArrayData", jsonArrayData);
         model.addAttribute("jsonArrayAverageTemp", jsonArrayAverageTemp);
         model.addAttribute("jsonArrayTempSet", jsonArrayTempSet);
-
         return "batches/batchDetails";
     }
 
@@ -140,6 +163,7 @@ public class BatchController {
         else{
             Batch batch = batchService.findByName(batchName);
             log.setId();
+            log.setTime(log.getTime().replace("T", " "));
             batch.addLog(log);
             batchService.save(batch);
             return "redirect:/batches/" + batchName;

@@ -8,11 +8,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>New Batch</title>
 </head>
 <body>
 
 <!--NAVBAR ADDING-->
 <div th:insert="fragments/header :: navbar"></div>
+</br>
+<h2 class="my-3 text-center">New Batch</h2>
+</br>
 <div class="container">
     <form th:object="${batch}" method="post" th:action="${'/batches/new'}">
 
@@ -22,7 +26,7 @@
                 <div style="padding: 10px">
                     <label>Name:</label>
                     <input type="text" class="form-control" th:field="*{name}"/>
-                    <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Name Error</p>
                 </div>
                 <div style="padding: 10px">
                     <label>Freezer:</label>
@@ -30,12 +34,12 @@
                         <option th:value="0" text="Please Select" disabled selected></option>
                         <option th:each="freez : ${freezers}" th:value="${freez}" th:text="${freez}"></option>
                     </select>
-                    <td th:if="${#fields.hasErrors('freezer')}" th:errors="*{freezer}">Name Error</td>
+                    <p th:if="${#fields.hasErrors('freezer')}" th:errors="*{freezer}" style="color: red">Name Error</p>
                 </div>
                 <div style="padding: 10px">
                     <label>Style:</label>
                     <input type="text" class="form-control" th:field="*{style}"/>
-                    <td th:if="${#fields.hasErrors('style')}" th:errors="*{style}">Name Error</td>
+                    <p th:if="${#fields.hasErrors('style')}" th:errors="*{style}" style="color: red">Name Error</p>
                 </div>
                 <div style="padding: 10px">
                     <label>BatchType:</label>
@@ -44,25 +48,30 @@
                         <option th:each="typeOpt : ${T(com.agh.database.brewingdatabaseapp.model.BatchType).values()}"
                                 th:value="${typeOpt}" th:text="${typeOpt}"></option>
                     </select>
-                    <td th:if="${#fields.hasErrors('batchType')}" th:errors="*{batchType}">Name Error</td>
+                    <p th:if="${#fields.hasErrors('batchType')}" th:errors="*{batchType}" style="color: red">Name Error</p>
                 </div>
                 <div style="padding: 10px">
                     <label>BrewedDate:</label>
-                    <input type="date" class="form-control" th:field="*{brewedDate}"/>
-                    <td th:if="${#fields.hasErrors('brewedDate')}" th:errors="*{brewedDate}">Name Error</td>
+                    <input type="datetime-local" class="form-control" th:field="*{brewedDate}"/>
+                    <p th:if="${#fields.hasErrors('brewedDate')}" th:errors="*{brewedDate}" style="color: red">Name Error</p>
                 </div>
                 <div style="padding: 10px">
                     <label>BottledDate:</label>
-                    <input type="date" class="form-control" th:field="*{bottledDate}"/>
-                    <td th:if="${#fields.hasErrors('bottledDate')}" th:errors="*{bottledDate}">Name Error</td>
+                    <input type="datetime-local" class="form-control" th:field="*{bottledDate}"/>
+                    <p th:if="${#fields.hasErrors('bottledDate')}" th:errors="*{bottledDate}" style="color: red">Name Error</p>
                 </div>
             </div>
 
+            </br>
+            </br>
+            <h4 class="my-3 text-center">Add ingredients</h4>
+            <div class="text-center" th:text="${amountError}" style="color: red"></div>
             <div>
                 <table id="batches" class="table table-striped">
                     <thead>
                     <tr>
                         <th style="width: 200px;">Ingredient name</th>
+                        <th style="width: 200px;">Amount available</th>
                         <th style="width: 200px;">Amount</th>
                         <th style="width: 200px;">Time</th>
                         <th style="width: 200px;">Technique</th>
@@ -71,9 +80,16 @@
                     <tbody>
                     <tr th:each="batchIngredient, itemStat : *{batchIngredients}">
                         <td th:text="*{batchIngredients[__${itemStat.index}__].ingredientName}"/>
+                        <td th:text="${amountAvailable[__${itemStat.index}__]}"/>
                         <td hidden><input th:field="*{batchIngredients[__${itemStat.index}__].ingredientName}"/></td>
-                        <td><input th:field="*{batchIngredients[__${itemStat.index}__].amount}"/></td>
-                        <td><input th:field="*{batchIngredients[__${itemStat.index}__].time}"/></td>
+                        <td>
+                            <input th:field="*{batchIngredients[__${itemStat.index}__].amount}"/>
+                            <p th:if="${#fields.hasErrors('batchIngredients[__${itemStat.index}__].amount')}" style="color: red">Amount is a number, not a string</p>
+                        </td>
+                        <td>
+                            <input th:field="*{batchIngredients[__${itemStat.index}__].time}"/>
+                            <p th:if="${#fields.hasErrors('batchIngredients[__${itemStat.index}__].time')}" style="color: red">Time is a number of minutes, not a string</p>
+                        </td>
                         <td>
                             <select th:field="*{batchIngredients[__${itemStat.index}__].techniqueType}">
                                 <option th:value="0" text="Please Select" disabled selected></option>
@@ -87,6 +103,9 @@
             </div>
 
             <!--LIST OF MASHES-->
+            </br>
+            </br>
+            <h4 class="my-3 text-center">Add mashes</h4>
             <div id="mashList">
                 <table>
                     <thead>
@@ -102,10 +121,11 @@
                         <td class="col form-group" style="width: 200px;" th:text="${status.count}"/>
                         <td class="col form-group">
                             <input th:field="*{mashes[__${status.index}__].temp}" type="text" class="form-control">
+                            <p th:if="${#fields.hasErrors('mashes[__${status.index}__].temp')}" style="color: red">Temperature is a double, not a string</p>
                         </td>
                         <td class="col form-group">
-                            <input th:field="*{mashes[__${status.index}__].durationMins}" type="text"
-                                   class="form-control">
+                            <input th:field="*{mashes[__${status.index}__].durationMins}" type="text" class="form-control">
+                            <p th:if="${#fields.hasErrors('mashes[__${status.index}__].temp')}" style="color: red">Temperature is a double, not a string</p>
                         </td>
                     </tr>
                     </tbody>

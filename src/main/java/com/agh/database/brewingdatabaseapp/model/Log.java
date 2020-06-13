@@ -3,10 +3,10 @@ package com.agh.database.brewingdatabaseapp.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -17,8 +17,7 @@ public class Log {
 
     private int id;
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate time;
+    private String time;
     @NotNull
     private double temp_in;
     @NotNull
@@ -28,9 +27,9 @@ public class Log {
     @NotNull
     private double epsilon;
 
-    public Log(LocalDate time, double temp_in, double temp_out, double temp_set, double epsilon) {
+    public Log(LocalDateTime time, double temp_in, double temp_out, double temp_set, double epsilon) {
         this.id = highestID++;
-        this.time = time;
+        this.time = time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.temp_in = temp_in;
         this.temp_out = temp_out;
         this.temp_set = temp_set;

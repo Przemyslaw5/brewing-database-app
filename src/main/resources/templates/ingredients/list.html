@@ -7,13 +7,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Title</title>
+    <title>Ingredient list</title>
 </head>
 <body>
 
 <!--NAVBAR ADDING-->
 <div th:insert="fragments/header :: navbar"></div>
-<h2 class="my-3 text-center">Item list</h2>
+
+</br>
+<h2 class="my-3 text-center">Ingredient list</h2>
+</br>
+
 <div class="container">
     <table id="batches" class="table">
         <thead class="thead-light">
@@ -21,6 +25,8 @@
             <th style="width: 200px;">Name</th>
             <th style="width: 200px;">Type</th>
             <th style="width: 200px;">Description</th>
+            <th style="width: 200px;">Unit</th>
+            <th style="width: 200px;">Units in stock</th>
         </tr>
         </thead>
 
@@ -31,6 +37,8 @@
             </td>
             <td th:text="${ingredient.ingredientType}"/>
             <td th:text="${ingredient.description}"/>
+            <td th:text="${ingredient.unitIngredient}"/>
+            <td th:text="${ingredient.unitsInStock}"/>
         </tr>
         </tbody>
     </table>

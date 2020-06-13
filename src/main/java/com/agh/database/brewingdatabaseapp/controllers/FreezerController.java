@@ -7,6 +7,7 @@ import com.agh.database.brewingdatabaseapp.services.FreezerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,7 +52,12 @@ public class FreezerController {
 
     @PostMapping("/freezers/new")
     public String saveNewFreezer(@Valid Freezer freezer, BindingResult result, Model model) {
-        if (result.hasErrors()) {
+        Freezer f = freezerService.findByName(freezer.getName());
+        if (result.hasErrors() || f != null) {
+            if (f != null) {
+                FieldError nameError = new FieldError("name", "name", "Freezer with that name already exists.");
+                result.addError(nameError);
+            }
             model.addAttribute("freezer", freezer);
             return "freezers/new";
         }

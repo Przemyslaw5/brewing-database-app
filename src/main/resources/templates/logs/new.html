@@ -18,28 +18,28 @@
     <div>
         <div style="padding: 10px">
             <label>Time:</label>
-            <input type="date" class="form-control" th:field="*{time}"/>
-            <td th:if="${#fields.hasErrors('time')}" th:errors="*{time}">Name Error</td>
+            <input type="datetime-local" class="form-control" th:field="*{time}"/>
+            <p th:if="${#fields.hasErrors('time')}" th:errors="*{time}" style="color: red;">Name Error</p>
         </div>
         <div style="padding: 10px">
             <label>Temperature in:</label>
             <input type="text" class="form-control" th:field="*{temp_in}"/>
-            <td th:if="${#fields.hasErrors('temp_in')}" th:errors="*{temp_in}">Name Error</td>
+            <p th:if="${#fields.hasErrors('temp_in')}" style="color: red">Temperature in is a double value not a string</p>
         </div>
         <div style="padding: 10px">
             <label>Temperature out:</label>
             <input type="text" class="form-control" th:field="*{temp_out}"/>
-            <td th:if="${#fields.hasErrors('temp_out')}" th:errors="*{temp_out}">Name Error</td>
+            <p th:if="${#fields.hasErrors('temp_out')}" style="color: red">Temperature out is a double value not a string</p>
         </div>
         <div style="padding: 10px">
             <label>Temperature set:</label>
             <input type="text" class="form-control" th:field="*{temp_set}"/>
-            <td th:if="${#fields.hasErrors('temp_set')}" th:errors="*{temp_set}">Name Error</td>
+            <p th:if="${#fields.hasErrors('temp_set')}" style="color: red">Temperature set is a double value not a string</p>
         </div>
         <div style="padding: 10px">
             <label>Epsilon: </label>
             <input type="text" class="form-control" th:field="*{epsilon}"/>
-            <td th:if="${#fields.hasErrors('epsilon')}" th:errors="*{epsilon}">Name Error</td>
+            <p th:if="${#fields.hasErrors('epsilon')}" style="color: red">Epsilon in is a double value not a string</p>
         </div>
     </div>
     <div>

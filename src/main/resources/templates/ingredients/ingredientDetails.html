@@ -6,41 +6,54 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Title</title>
+    <title>Ingredient details</title>
 </head>
 <body>
 
 <!--NAVBAR ADDING-->
 <div th:insert="fragments/header :: navbar"></div>
 
+</br>
+<h2 class="my-3 text-center">Ingredient details</h2>
+</br>
 
-<h2 class="my-3 text-center">Ingredeint Details</h2>
 <div class="container">
 <table class="table" th:object="${ingredient}">
     <tr>
         <th>Name</th>
-        <td><b th:text="${ingredient.name}"></b></td>
+        <td th:text="${ingredient.name}"></td>
     </tr>
     <tr>
         <th>Type</th>
-        <td><b th:text="${ingredient.ingredientType}"></b></td>
+        <td th:text="${ingredient.ingredientType}"></td>
     </tr>
     <tr>
         <th>Description</th>
-        <td><b th:text="${ingredient.description}"></b></td>
+        <td th:text="${ingredient.description}"></td>
+    </tr>
+    <tr>
+        <th>Unit</th>
+        <td th:text="${ingredient.unitIngredient}"></td>
+    </tr>
+    <tr>
+        <th>Units in stock</th>
+        <td th:text="${ingredient.unitsInStock}"></td>
     </tr>
 </table>
 
-<br /><br /><br />
+<br /><br />
 <a th:href="@{/ingredients/{name}/edit(name=${ingredient.name})}" class="btn btn-outline-info">Edit Ingredient</a>
-<br /><br /><br />
 
+</br>
+</br>
+<h4 class="my-3 text-center">Inventories</h4>
 
 <table class="table">
     <thead class="thead-light">
     <tr>
         <th style="width: 200px;">ID</th>
-        <th style="width: 200px;">Amount</th>
+        <th style="width: 200px;">Amount bought</th>
+        <th style="width: 200px;">Amount available</th>
         <th style="width: 200px;">Time Bought</th>
         <th style="width: 200px;">Best Before</th>
         <th style="width: 200px;">Opened</th>
@@ -49,11 +62,12 @@
     <tbody>
 
     <tr th:each="inventory : ${ingredient.inventories}">
-        <td><b th:text="${inventory.id}"></b></td>
-        <td><b th:text="${inventory.amount}"></b></td>
-        <td><b th:text="${inventory.timeBought}"></b></td>
-        <td><b th:text="${inventory.bestBefore}"></b></td>
-        <td><b th:text="${inventory.opened}"></b></td>
+        <td th:text="${inventory.id}"></td>
+        <td th:text="${inventory.amount}"></td>
+        <td th:text="${inventory.amountAvailable}"></td>
+        <td th:text="${inventory.timeBought}"></td>
+        <td th:text="${inventory.bestBefore}"></td>
+        <td th:text="${inventory.opened}"></td>
     </tr>
     </tbody>
 

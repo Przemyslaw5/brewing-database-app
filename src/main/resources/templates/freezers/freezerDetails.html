@@ -6,28 +6,36 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Title</title>
+    <title>Freezer Details</title>
 </head>
 <body>
 
 <!--NAVBAR ADDING-->
 <div th:insert="fragments/header :: navbar"></div>
+
+</br>
+<h2 class="my-3 text-center">Freezer Details</h2>
+</br>
+
 <div class="container mt-5">
 <table class="table" th:object="${freezer}">
     <tr>
         <th>Name</th>
-        <td><b th:text="${freezer.name}"></b></td>
+        <td th:text="${freezer.name}"></td>
     </tr>
     <tr>
         <th>City</th>
-        <td><b th:text="${freezer.city}"></b></td>
+        <td th:text="${freezer.city}"></td>
     </tr>
     <tr>
         <th>Address</th>
-        <td><b th:text="${freezer.address}"></b></td>
+        <td th:text="${freezer.address}"></td>
     </tr>
 </table>
 
+</br>
+</br>
+<h4 class="my-3 text-center">Batches</h4>
 
 <table class="table">
     <thead class="thead-light">
@@ -43,15 +51,15 @@
         <td>
             <a th:href="@{/batches/__${batch.name}__}" th:text="${batch.name}"/></a>
         </td>
-        <td><b th:text="${batch.batchType}"></b></td>
-        <td><b th:text="${batch.brewedDate}"></b></td>
-        <td><b th:text="${batch.bottledDate}"></b></td>
+        <td th:text="${batch.batchType}"></td>
+        <td th:text="${batch.brewedDate}"></td>
+        <td th:text="${batch.bottledDate}"></td>
     </tr>
     </tbody>
 
 </table>
 
-<a class="btn btn-outline-success" th:href="@{/batches/new}">Add Batch</a>
+<a class="btn btn-outline-success" th:href="@{/batches/new}">Add new Batch</a>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

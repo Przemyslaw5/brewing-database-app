@@ -6,43 +6,46 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Title</title>
+    <title>New Ingredient</title>
 </head>
 <body>
 
 <!--NAVBAR ADDING-->
 <div th:insert="fragments/header :: navbar"></div>
 
-
-<h2 class="my-3 text-center">Ingredient</h2>
-<form th:object="${ingredient}" method="post">
-    <div>
-        <div style="padding: 10px">
-            <label>Name:</label>
-            <input type="text" class="form-control" th:field="*{name}"/>
-            <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
+</br>
+<h2 class="my-3 text-center">New Ingredient</h2>
+</br>
+<div class="container">
+    <form th:object="${ingredient}" method="post">
+        <div>
+            <div style="padding: 10px">
+                <label>Name:</label>
+                <input type="text" class="form-control" th:field="*{name}"/>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Name Error</p>
+            </div>
+            <div style="padding: 10px">
+                <label>BatchType:</label>
+                <select name="ingredientType">
+                    <option th:value="0" text="Please Select" disabled selected></option>
+                    <option th:each="typeOpt : ${T(com.agh.database.brewingdatabaseapp.model.IngredientType).values()}"
+                            th:value="${typeOpt}" th:text="${typeOpt}"></option>
+                </select>
+                <p th:if="${#fields.hasErrors('ingredientType')}" th:errors="*{ingredientType}" style="color: red">Name Error</p>
+            </div>
+            <div style="padding: 10px">
+                <label>Description:</label>
+                <input type="text" class="form-control" th:field="*{description}"/>
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red">Name Error</p>
+            </div>
         </div>
-        <div style="padding: 10px">
-            <label>BatchType:</label>
-            <select name="ingredientType">
-                <option th:value="0" text="Please Select" disabled selected></option>
-                <option th:each="typeOpt : ${T(com.agh.database.brewingdatabaseapp.model.IngredientType).values()}"
-                        th:value="${typeOpt}" th:text="${typeOpt}"></option>
-            </select>
-            <td th:if="${#fields.hasErrors('ingredientType')}" th:errors="*{ingredientType}">Name Error</td>
+        <div>
+            <div style="padding: 10px">
+                <button class="btn btn-outline-success" type="submit">Add Ingredient</button>
+            </div>
         </div>
-        <div style="padding: 10px">
-            <label>Description:</label>
-            <input type="text" class="form-control" th:field="*{description}"/>
-            <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Name Error</td>
-        </div>
-    </div>
-    <div>
-        <div style="padding: 10px">
-            <button type="submit">Add Ingredient</button>
-        </div>
-    </div>
-</form>
+    </form>
+</div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

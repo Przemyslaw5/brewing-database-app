@@ -6,43 +6,48 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Title</title>
+    <title>New Inventory</title>
 </head>
 <body>
 
 <!--NAVBAR ADDING-->
 <div th:insert="fragments/header :: navbar"></div>
 
-<h2 class="my-3 text-center">Inventory</h2>
-<form th:object="${inventory}" method="post">
-    <div>
-        <div style="padding: 10px">
-            <label>Time Bought:</label>
-            <input type="date" class="form-control" th:field="*{timeBought}"/>
-            <td th:if="${#fields.hasErrors('timeBought')}" th:errors="*{timeBought}">Name Error</td>
+</br>
+<h2 class="my-3 text-center">New Inventory</h2>
+</br>
+
+<div class="container">
+    <form th:object="${inventory}" method="post">
+        <div>
+            <div style="padding: 10px">
+                <label>Time Bought:</label>
+                <input type="datetime-local" class="form-control" th:field="*{timeBought}"/>
+                <p th:if="${#fields.hasErrors('timeBought')}" th:errors="*{timeBought}" style="color: red">Name Error</p>
+            </div>
+            <div style="padding: 10px">
+                <label>Amount:</label>
+                <input type="text" class="form-control" th:field="*{amount}"/>
+                <p th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" style="color: red;">Name Error</p>
+            </div>
+            <div style="padding: 10px">
+                <label>Best Before:</label>
+                <input type="datetime-local" class="form-control" th:field="*{bestBefore}"/>
+                <p th:if="${#fields.hasErrors('bestBefore')}" th:errors="*{bestBefore}" style="color: red">Name Error</p>
+            </div>
+            <div style="padding: 10px">
+                <label>Opened:</label>
+                <input type="datetime-local" class="form-control" th:field="*{opened}"/>
+                <p th:if="${#fields.hasErrors('opened')}" th:errors="*{opened}" style="color: red">Name Error</p>
+            </div>
         </div>
-        <div style="padding: 10px">
-            <label>Amount:</label>
-            <input type="text" class="form-control" th:field="*{amount}"/>
-            <td th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Name Error</td>
+        <div>
+            <div style="padding: 10px">
+                <button class="btn btn-outline-success" type="submit">Add Inventory</button>
+            </div>
         </div>
-        <div style="padding: 10px">
-            <label>Best Before:</label>
-            <input type="date" class="form-control" th:field="*{bestBefore}"/>
-            <td th:if="${#fields.hasErrors('bestBefore')}" th:errors="*{bestBefore}">Name Error</td>
-        </div>
-        <div style="padding: 10px">
-            <label>Opened:</label>
-            <input type="date" class="form-control" th:field="*{opened}"/>
-            <td th:if="${#fields.hasErrors('opened')}" th:errors="*{opened}">Name Error</td>
-        </div>
-    </div>
-    <div>
-        <div style="padding: 10px">
-            <button type="submit">Add Inventory</button>
-        </div>
-    </div>
-</form>
+    </form>
+</div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

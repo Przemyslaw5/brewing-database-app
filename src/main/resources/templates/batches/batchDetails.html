@@ -2,48 +2,56 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>DETAILS</title>
+    <title>Batch Details</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 </head>
-<body>
 
 <!--NAVBAR ADDING-->
 <div th:insert="fragments/header :: navbar"></div>
 
-
+</br>
 <h2 class="my-3 text-center">Batch Details</h2>
+</br>
 
 
 <div class="container">
-<table class="table" th:object="${batch}">
+<table class="table table-striped" th:object="${batch}">
     <tr>
         <th>Name</th>
-        <td><b th:text="${batch.name}"></b></td>
+        <td th:text="${batch.name}"></td>
     </tr>
     <tr>
         <th>Freezer name</th>
-        <td><b th:text="${batch.freezer.name}"></b></td>
+        <td th:text="${batch.freezer.name}"></td>
     </tr>
     <tr>
         <th>BatchType</th>
-        <td><b th:text="${batch.batchType}"></b></td>
+        <td th:text="${batch.batchType}"></td>
     </tr>
     <tr>
         <th>BrewedDate</th>
-        <td><b th:text="${batch.brewedDate}"></b></td>
+        <td th:text="${batch.brewedDate}"></td>
     </tr>
     <tr>
         <th>BottledDate</th>
-        <td><b th:text="${batch.bottledDate}"></b></td>
+        <td th:text="${batch.bottledDate}"></td>
     </tr>
 </table>
-<br>
-<div >
+
+</br>
+</br>
+
+<div>
     <div id="logs-in-table" style="display: block">
-        <table class="table">
+        <h4 class="my-3 text-center">Logs</h4>
+        <table id="myTable" class="table">
             <thead class="thead-light">
             <tr>
                 <th style="width: 200px;">ID</th>
@@ -57,12 +65,12 @@
             </thead>
             <tbody>
             <tr th:each="log : ${batch.logs}">
-                <td><b th:text="${log.id}"></b></td>
-                <td><b th:text="${log.time}"></b></td>
-                <td><b th:text="${log.temp_set}"></b></td>
-                <td><b th:text="${log.temp_in}"></b></td>
-                <td><b th:text="${log.temp_out}"></b></td>
-                <td><b th:text="${log.epsilon}"></b></td>
+                <td th:text="${log.id}"></td>
+                <td th:text="${log.time}"></td>
+                <td th:text="${log.temp_set}"></td>
+                <td th:text="${log.temp_in}"></td>
+                <td th:text="${log.temp_out}"></td>
+                <td th:text="${log.epsilon}"></td>
                 <td><a th:href="@{{name}/logs/delete/{id}(name=${batch.name}, id=${log.id})}"><span style="cursor: pointer; color: #ff0000" class="material-icons">delete</span></a></td>
             </tr>
             </tbody>
@@ -74,18 +82,20 @@
             <div id="container"></div>
         </figure>
     </div>
-
-    <button class="btn btn-outline-info" id="button_log" onclick="change_log_content()">Show logs</button>
-
 </div>
 <br/><br/>
+<div class="text-center">
+    <a class="btn btn-outline-success mr-5" th:href="@{{name}/logs/new(name=${batch.name})}">Add New Log</a>
+    <button class="btn btn-outline-info" id="button_log" onclick="change_log_content()">Show chart</button>
+</div>
 
-<a class="btn btn-outline-success" th:href="@{{name}/logs/new(name=${batch.name})}">Add New Log</a>
 
 
 
-<br /><br /><br />
-<table class="table w-75">
+</br>
+</br>
+<h4 class="my-3 text-center">Mashes</h4>
+<table class="table w-75" style="margin: auto">
     <thead class="thead-light">
     <tr>
         <th style="width: 200px;">Step</th>
@@ -105,8 +115,10 @@
 <br />
 
 
-<br /><br />
-<table class="table w-75">
+</br>
+</br>
+<h4 class="my-3 text-center">Ingredients</h4>
+<table class="table w-75" style="margin: auto">
     <thead class="thead-light">
     <tr>
         <th style="width: 200px;">Ingredient Name</th>
@@ -193,19 +205,24 @@
     function change_log_content() {
         const div1 = document.getElementById("logs-in-table");
         if (div1.style.display === "block") {
-            document.getElementById('button_log').textContent = "Show chart"
+            document.getElementById('button_log').textContent = "Show logs"
             document.getElementById('logs-in-table').style.display = "none";
             document.getElementById('logs-in-chart').style.display = "block";
         } else {
-            document.getElementById('button_log').textContent="Show logs"
+            document.getElementById('button_log').textContent="Show chart"
             document.getElementById('logs-in-chart').style.display="none";
             document.getElementById('logs-in-table').style.display="block";
         }
     }
 </script>
+<script>
+    $(document).ready(function(){
+        $('#myTable').dataTable();
+    });
+</script>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 

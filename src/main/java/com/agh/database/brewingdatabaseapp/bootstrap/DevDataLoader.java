@@ -9,7 +9,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Random;
 
 @Component
 @Profile("dev")
@@ -24,6 +25,19 @@ public class DevDataLoader implements CommandLineRunner {
         this.batchService = batchService;
         this.ingredientService = ingredientService;
         this.freezerService = freezerService;
+    }
+
+    public void addNLogs(Batch batch, int n, LocalDateTime localDateTime, double minTempIn, double maxTempIn, double minTempOut, double maxTempOut, double minTempSet, double maxTempSet, double minEpsilon, double maxEpsilon){
+        Random r = new Random();
+
+        for(int i = 0; i < n; i++){
+            double randomTempIn = Math.round((minTempIn + (maxTempIn - minTempIn) * r.nextDouble()) * 100.0) / 100.0;
+            double randomTempOut = Math.round((minTempOut + (maxTempOut - minTempOut) * r.nextDouble()) * 100.0) / 100.0;
+            double randomTempSet = Math.round((minTempSet + (maxTempSet - minTempSet) * r.nextDouble()) * 100.0) / 100.0;
+            double randomEpsilon = Math.round((minEpsilon + (maxEpsilon - minEpsilon) * r.nextDouble()) * 100.0) / 100.0;
+            batch.addLog(new Log(localDateTime, randomTempIn, randomTempOut, randomTempSet, randomEpsilon));
+            localDateTime = localDateTime.plusMinutes(40 + Math.abs(r.nextInt() % 41)); //add random number minutes from range 40 to 80
+        }
     }
 
     @Override
@@ -46,67 +60,57 @@ public class DevDataLoader implements CommandLineRunner {
         freezerService.save(freezer4);
         freezerService.save(freezer5);
 
-        Batch batch1 = new Batch("first batch", freezer1, "Dunkel", BatchType.LAGER, LocalDate.of(2019, 10, 23), LocalDate.of(2019, 11, 10));
-        Batch batch2 = new Batch("Best batch", freezer2, "Flanders red ale", BatchType.ALE, LocalDate.of(2020, 3, 15), LocalDate.of(2020, 3, 18));
-        Batch batch3 = new Batch("batch53", freezer3, "Vienna lager", BatchType.LAGER, LocalDate.of(2020, 1, 11), LocalDate.of(2020, 1, 12));
-        Batch batch4 = new Batch("beer for testing", freezer3, "India pale ale", BatchType.BELGIAN_ALE, LocalDate.of(2020, 5, 9), LocalDate.of(2020, 5, 16));
+        Batch batch1 = new Batch("first batch", freezer1, "Dunkel", BatchType.LAGER, LocalDateTime.of(2019, 10, 23, 13,52), LocalDateTime.of(2019, 11, 10, 5,32));
+        Batch batch2 = new Batch("Best batch", freezer2, "Flanders red ale", BatchType.ALE, LocalDateTime.of(2020, 3, 15, 8,12), LocalDateTime.of(2020, 3, 18, 9,43));
+        Batch batch3 = new Batch("batch53", freezer3, "Vienna lager", BatchType.LAGER, LocalDateTime.of(2020, 1, 11, 22,45), LocalDateTime.of(2020, 1, 12, 19,38));
+        Batch batch4 = new Batch("beer for testing", freezer3, "India pale ale", BatchType.BELGIAN_ALE, LocalDateTime.of(2020, 5, 9, 17,37), LocalDateTime.of(2020, 5, 16, 20,28));
         batchService.save(batch1);
         batchService.save(batch2);
         batchService.save(batch3);
         batchService.save(batch4);
 
-        batch1.addLog(new Log(LocalDate.of(2019, 11, 10), 10.3, 2.14, 2.0, 9.5));
-        batch1.addLog(new Log(LocalDate.of(2019, 11, 11), 9.52, 2.02, 2.0, 9.5));
-        batch1.addLog(new Log(LocalDate.of(2019, 11, 12), 10.11, 2.21, 2.0, 9.5));
+        addNLogs(batch1, 95, LocalDateTime.of(2019, 11, 10, 10, 42), 9, 11, 2, 2.5, 1.9, 2.1, 9.2, 10.6);
         batch1.addMash(new Mash(1, 45, 300.23));
         batch1.addMash(new Mash(2, 321, 125.64));
 
-        batch2.addLog(new Log(LocalDate.of(2020, 3, 18), 9.23, 5.25, 5.0, 4.0));
-        batch2.addLog(new Log(LocalDate.of(2020, 3, 23), 9.64, 5.63, 5.0, 4.0));
+        addNLogs(batch2, 112, LocalDateTime.of(2020, 3, 18, 14, 43), 9, 9.5, 5, 6, 4.9, 5.1, 3.8, 4.3);
         batch2.addMash(new Mash(1, 63, 12.32));
 
-        batch3.addLog(new Log(LocalDate.of(2020, 1, 12), 14.53, 9.42, 9.0, 6.0));
-        batch3.addLog(new Log(LocalDate.of(2020, 1, 13), 14.63, 9.12, 9.0, 6.0));
-        batch3.addLog(new Log(LocalDate.of(2020, 1, 14), 14.21, 10.05, 9.5, 6.0));
-        batch3.addLog(new Log(LocalDate.of(2020, 1, 15), 14.87, 8.99, 9.0, 6.0));
-        batch3.addLog(new Log(LocalDate.of(2020, 1, 16), 14.74, 9.24, 9.0, 6.0));
+        addNLogs(batch3, 74, LocalDateTime.of(2020, 1, 12, 13, 24), 14, 15, 8.5, 10.5, 9, 9.5, 5.9, 6.1);
         batch3.addMash(new Mash(1, 532, 123.32));
         batch3.addMash(new Mash(2, 23, 53.23));
         batch3.addMash(new Mash(3, 643, 74.27));
         batch3.addMash(new Mash(4, 313, 34.63));
 
-        batch4.addLog(new Log(LocalDate.of(2020, 5, 16), 22.31, 15.23, 15.0, 10.5));
-        batch4.addLog(new Log(LocalDate.of(2020, 5, 18), 22.63, 16.75, 16.0, 10.5));
-        batch4.addLog(new Log(LocalDate.of(2020, 5, 25), 21.85, 15.77, 15.0, 10.5));
-        batch4.addLog(new Log(LocalDate.of(2020, 6, 1), 23.02, 15.24, 15.0, 10.5));
+        addNLogs(batch4, 102, LocalDateTime.of(2020, 5, 16, 20, 39), 20, 25, 14, 16, 15, 16, 10, 10.5);
         batch4.addMash(new Mash(1, 421, 123.31));
         batch4.addMash(new Mash(2, 21, 23.42));
         batch4.addMash(new Mash(3, 873, 353.43));
 
-        Ingredient ingredient1 = new Ingredient("Water", IngredientType.OTHER, "Nice water");
-        Inventory inventory1 = new Inventory(ingredient1.getName(), LocalDate.of(2019, 12, 28), 19812, LocalDate.of(2020, 8, 5), LocalDate.of(2020, 12, 29));
-        Inventory inventory2 = new Inventory(ingredient1.getName(), LocalDate.of(2020, 3, 19), 5311, LocalDate.of(2021, 3, 14), null);
-        Inventory inventory3 = new Inventory(ingredient1.getName(), LocalDate.of(2020, 5, 3), 12434, LocalDate.of(2021, 6, 1), null);
+        Ingredient ingredient1 = new Ingredient("Water", IngredientType.OTHER, UnitIngredient.GALLON, 0, "Nice water");
+        Inventory inventory1 = new Inventory(ingredient1.getName(), LocalDateTime.of(2019, 12, 28, 15, 53), 19812, LocalDateTime.of(2020, 8, 5, 12, 42), LocalDateTime.of(2020, 12, 29, 0,0));
+        Inventory inventory2 = new Inventory(ingredient1.getName(), LocalDateTime.of(2020, 3, 19, 14, 3), 5311, LocalDateTime.of(2021, 3, 14, 0,0), null);
+        Inventory inventory3 = new Inventory(ingredient1.getName(), LocalDateTime.of(2020, 5, 3, 12,53), 12434, LocalDateTime.of(2021, 6, 1, 0,0), null);
         ingredient1.addInventory(inventory1);
         ingredient1.addInventory(inventory2);
         ingredient1.addInventory(inventory3);
         ingredientService.save(ingredient1);
 
-        Ingredient ingredient2 = new Ingredient("Yeast north", IngredientType.YEAST, "Freshly");
-        Inventory inventory4 = new Inventory(ingredient2.getName(), LocalDate.of(2020, 3, 12), 153, LocalDate.of(2020, 6, 19), LocalDate.of(2020, 12, 29));
-        Inventory inventory5 = new Inventory(ingredient2.getName(), LocalDate.of(2020, 4, 14), 613, LocalDate.of(2021, 7, 1), null);
+        Ingredient ingredient2 = new Ingredient("Yeast north", IngredientType.YEAST, UnitIngredient.LB, 0, "Freshly");
+        Inventory inventory4 = new Inventory(ingredient2.getName(), LocalDateTime.of(2020, 3, 12, 12,4), 153, LocalDateTime.of(2020, 6, 19, 20,54), LocalDateTime.of(2020, 12, 29, 0,0));
+        Inventory inventory5 = new Inventory(ingredient2.getName(), LocalDateTime.of(2020, 4, 14, 7,42), 613, LocalDateTime.of(2021, 7, 1, 18,20), null);
         ingredient2.addInventory(inventory4);
         ingredient2.addInventory(inventory5);
         ingredientService.save(ingredient2);
 
-        Ingredient ingredient3 = new Ingredient("Icelandic hops", IngredientType.HOPS, "The best around");
-        Inventory inventory6 = new Inventory(ingredient3.getName(), LocalDate.of(2020, 4, 9), 6984, LocalDate.of(2020, 9, 23), LocalDate.of(2020, 5, 22));
+        Ingredient ingredient3 = new Ingredient("Icelandic hops", IngredientType.HOPS, UnitIngredient.LB, 0, "The best around");
+        Inventory inventory6 = new Inventory(ingredient3.getName(), LocalDateTime.of(2020, 4, 9, 12,52), 6984, LocalDateTime.of(2020, 9, 23, 3,48), LocalDateTime.of(2020, 5, 22, 0,0));
         ingredient3.addInventory(inventory6);
         ingredientService.save(ingredient3);
 
-        Ingredient ingredient4 = new Ingredient("Sea salt", IngredientType.OTHER, "Bought in a local shop");
-        Inventory inventory7 = new Inventory(ingredient4.getName(), LocalDate.of(2020, 1, 23), 4314, LocalDate.of(2020, 11, 20), LocalDate.of(2020, 4, 9));
-        Inventory inventory8 = new Inventory(ingredient4.getName(), LocalDate.of(2020, 4, 1), 6424, LocalDate.of(2021, 2, 3), null);
+        Ingredient ingredient4 = new Ingredient("Sea salt", IngredientType.OTHER, UnitIngredient.LB, 0, "Bought in a local shop");
+        Inventory inventory7 = new Inventory(ingredient4.getName(), LocalDateTime.of(2020, 1, 23, 10,11), 4314, LocalDateTime.of(2020, 11, 20, 10,23), LocalDateTime.of(2020, 4, 9, 0,0));
+        Inventory inventory8 = new Inventory(ingredient4.getName(), LocalDateTime.of(2020, 4, 1, 0,50), 6424, LocalDateTime.of(2021, 2, 3, 13,44), null);
         ingredient4.addInventory(inventory7);
         ingredient4.addInventory(inventory8);
         ingredientService.save(ingredient4);
@@ -127,7 +131,7 @@ public class DevDataLoader implements CommandLineRunner {
 
         //YEAST NORTH
         BatchIngredient batchIngredient5 = new BatchIngredient(batch2.getId(), ingredient2.getName(), 51, 12, TechniqueType.DRY);
-        BatchIngredient batchIngredient6 = new BatchIngredient(batch3.getId(), ingredient2.getName(), 64, 34, TechniqueType.DRY);
+        BatchIngredient batchIngredient6 = new BatchIngredient(batch3.getId(), ingredient2.getName(), 128, 34, TechniqueType.DRY);
         ingredient2.addBatchIngredient(batchIngredient5);
         ingredient2.addBatchIngredient(batchIngredient6);
         batch2.addBatchIngredients(batchIngredient5);
@@ -163,9 +167,10 @@ public class DevDataLoader implements CommandLineRunner {
         batchService.save(batch3);
         batchService.save(batch4);
 
-        ingredientService.save(ingredient1);
-        ingredientService.save(ingredient2);
-        ingredientService.save(ingredient3);
-        ingredientService.save(ingredient4);
+        ingredientService.setAmountOfProduct(ingredient1.getName(), batchIngredient1.getAmount() + batchIngredient2.getAmount() + batchIngredient3.getAmount() + batchIngredient4.getAmount());
+        ingredientService.setAmountOfProduct(ingredient2.getName(), batchIngredient5.getAmount() + batchIngredient6.getAmount());
+        ingredientService.setAmountOfProduct(ingredient3.getName(), batchIngredient7.getAmount() + batchIngredient8.getAmount() + batchIngredient9.getAmount());
+        ingredientService.setAmountOfProduct(ingredient4.getName(), batchIngredient10.getAmount() + batchIngredient11.getAmount() + batchIngredient12.getAmount() + batchIngredient13.getAmount());
+
     }
 }

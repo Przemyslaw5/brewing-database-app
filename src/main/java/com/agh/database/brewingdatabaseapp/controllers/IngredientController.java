@@ -78,6 +78,9 @@ public class IngredientController {
         else{
             Ingredient ingredient = ingredientService.findByName(inventory.getIngredientName());
             inventory.setId();
+            inventory.setTimeBought(inventory.getTimeBought().replace("T", " "));
+            inventory.setOpened(inventory.getOpened().replace("T", " "));
+            inventory.setBestBefore(inventory.getBestBefore().replace("T", " "));
             ingredient.addInventory(inventory);
             ingredientService.save(ingredient);
             return "redirect:/ingredients/{ingredientName}";

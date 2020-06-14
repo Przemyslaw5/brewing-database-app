@@ -34,6 +34,15 @@
                 <p th:if="${#fields.hasErrors('ingredientType')}" th:errors="*{ingredientType}" style="color: red">Name Error</p>
             </div>
             <div style="padding: 10px">
+                <label>Unit:</label>
+                <select name="unitIngredient">
+                    <option th:value="0" text="Please Select" disabled selected></option>
+                    <option th:each="typeOpt : ${T(com.agh.database.brewingdatabaseapp.model.UnitIngredient).values()}"
+                            th:value="${typeOpt}" th:text="${typeOpt}"></option>
+                </select>
+                <p th:if="${#fields.hasErrors('unitIngredient')}" th:errors="*{unitIngredient}" style="color: red">Name Error</p>
+            </div>
+            <div style="padding: 10px">
                 <label>Description:</label>
                 <input type="text" class="form-control" th:field="*{description}"/>
                 <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red">Name Error</p>

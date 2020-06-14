@@ -94,7 +94,7 @@ public class IngredientService implements MongoService<Ingredient, String> {
                     inventory.setAmountAvailable(0);
                     amount -= tmp;
                 }
-                if(inventory.getOpened() == null){
+                if("".equals(inventory.getOpened())){
                     inventory.setOpened(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
                 }
                 if(amount == 0){

@@ -28,7 +28,6 @@ public class Ingredient {
     private IngredientType ingredientType;
     @NotNull
     private UnitIngredient unitIngredient;
-    @NotNull
     private double unitsInStock;
     @NotNull
     @Size(min=7, max=100, message = "Description must be between 7 and 100 characters.")

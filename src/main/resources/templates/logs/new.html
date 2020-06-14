@@ -6,14 +6,14 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Title</title>
+    <title>New log</title>
 </head>
 
 <!--NAVBAR ADDING-->
 <div th:insert="fragments/header :: navbar"></div>
 
 <body>
-<h2 class="my-3 text-center">Batch</h2>
+<h2 class="my-3 text-center">New log</h2>
 <form class="container" th:object="${log}" method="post">
     <div>
         <div style="padding: 10px">
@@ -44,7 +44,7 @@
     </div>
     <div>
         <div style="padding: 10px">
-            <button type="submit">Add Batch</button>
+            <button type="submit">Add Log</button>
         </div>
     </div>
 </form>

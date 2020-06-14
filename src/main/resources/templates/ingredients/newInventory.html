@@ -28,7 +28,7 @@
             <div style="padding: 10px">
                 <label>Amount:</label>
                 <input type="text" class="form-control" th:field="*{amount}"/>
-                <p th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" style="color: red;">Name Error</p>
+                <p th:if="${#fields.hasErrors('amount')}" style="color: red;">Amount is a number, not a string</p>
             </div>
             <div style="padding: 10px">
                 <label>Best Before:</label>

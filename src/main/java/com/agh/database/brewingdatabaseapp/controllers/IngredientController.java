@@ -6,6 +6,7 @@ import com.agh.database.brewingdatabaseapp.services.IngredientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +42,12 @@ public class IngredientController {
 
     @PostMapping("/new")
     public String saveNewIngredient(@Valid Ingredient ingredient, BindingResult result, Model model){
-        if (result.hasErrors()) {
+        Ingredient i = ingredientService.findByName(ingredient.getName());
+        if (result.hasErrors() || i != null) {
+            if(i != null){
+                FieldError nameError = new FieldError("name", "name", "Ingredient with that name already exists.");
+                result.addError(nameError);
+            }
             model.addAttribute("ingredient", ingredient);
             return "ingredients/new";
         }
@@ -78,6 +84,7 @@ public class IngredientController {
         else{
             Ingredient ingredient = ingredientService.findByName(inventory.getIngredientName());
             inventory.setId();
+            inventory.setAmountAvailable(inventory.getAmount());
             inventory.setTimeBought(inventory.getTimeBought().replace("T", " "));
             inventory.setOpened(inventory.getOpened().replace("T", " "));
             inventory.setBestBefore(inventory.getBestBefore().replace("T", " "));

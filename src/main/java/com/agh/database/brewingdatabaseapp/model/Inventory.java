@@ -33,6 +33,10 @@ public class Inventory {
         this.id = highestID++;
     }
 
+    public void setAmountAvailable(double amountAvailable) {
+        this.amountAvailable = amountAvailable;
+    }
+
     public Inventory(String ingredientName, LocalDateTime timeBought, int amount, LocalDateTime bestBefore, LocalDateTime opened) {
         this.id = highestID++;
         this.ingredientName = ingredientName;

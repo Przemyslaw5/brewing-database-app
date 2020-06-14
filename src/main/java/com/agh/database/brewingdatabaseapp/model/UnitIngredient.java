@@ -2,5 +2,8 @@ package com.agh.database.brewingdatabaseapp.model;
 
 public enum UnitIngredient {
     LB,
-    GALLON
+    GALLON,
+    GRAMS,
+    PACKAGE,
+    LITRE
 }

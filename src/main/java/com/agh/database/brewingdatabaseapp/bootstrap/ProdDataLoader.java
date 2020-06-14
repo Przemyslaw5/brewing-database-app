@@ -166,6 +166,11 @@ public class ProdDataLoader implements CommandLineRunner {
         batchService.save(batch3);
         batchService.save(batch4);
 
+        ingredientService.save(ingredient1);
+        ingredientService.save(ingredient2);
+        ingredientService.save(ingredient3);
+        ingredientService.save(ingredient4);
+
         ingredientService.setAmountOfProduct(ingredient1.getName(), batchIngredient1.getAmount() + batchIngredient2.getAmount() + batchIngredient3.getAmount() + batchIngredient4.getAmount());
         ingredientService.setAmountOfProduct(ingredient2.getName(), batchIngredient5.getAmount() + batchIngredient6.getAmount());
         ingredientService.setAmountOfProduct(ingredient3.getName(), batchIngredient7.getAmount() + batchIngredient8.getAmount() + batchIngredient9.getAmount());

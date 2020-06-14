@@ -48,22 +48,25 @@
                         <option th:each="typeOpt : ${T(com.agh.database.brewingdatabaseapp.model.BatchType).values()}"
                                 th:value="${typeOpt}" th:text="${typeOpt}"></option>
                     </select>
-                    <p th:if="${#fields.hasErrors('batchType')}" th:errors="*{batchType}" style="color: red">Name Error</p>
+                    <p th:if="${#fields.hasErrors('batchType')}" th:errors="*{batchType}" style="color: red">Name
+                        Error</p>
                 </div>
                 <div style="padding: 10px">
                     <label>BrewedDate:</label>
                     <input type="datetime-local" class="form-control" th:field="*{brewedDate}"/>
-                    <p th:if="${#fields.hasErrors('brewedDate')}" th:errors="*{brewedDate}" style="color: red">Name Error</p>
+                    <p th:if="${#fields.hasErrors('brewedDate')}" th:errors="*{brewedDate}" style="color: red">Name
+                        Error</p>
                 </div>
                 <div style="padding: 10px">
                     <label>BottledDate:</label>
                     <input type="datetime-local" class="form-control" th:field="*{bottledDate}"/>
-                    <p th:if="${#fields.hasErrors('bottledDate')}" th:errors="*{bottledDate}" style="color: red">Name Error</p>
+                    <p th:if="${#fields.hasErrors('bottledDate')}" th:errors="*{bottledDate}" style="color: red">Name
+                        Error</p>
                 </div>
             </div>
 
-            </br>
-            </br>
+            <br>
+            <br>
             <h4 class="my-3 text-center">Add ingredients</h4>
             <div class="text-center" th:text="${amountError}" style="color: red"></div>
             <div>
@@ -84,11 +87,13 @@
                         <td hidden><input th:field="*{batchIngredients[__${itemStat.index}__].ingredientName}"/></td>
                         <td>
                             <input th:field="*{batchIngredients[__${itemStat.index}__].amount}"/>
-                            <p th:if="${#fields.hasErrors('batchIngredients[__${itemStat.index}__].amount')}" style="color: red">Amount is a number, not a string</p>
+                            <p th:if="${#fields.hasErrors('batchIngredients[__${itemStat.index}__].amount')}"
+                               style="color: red">Amount is a number, not a string</p>
                         </td>
                         <td>
                             <input th:field="*{batchIngredients[__${itemStat.index}__].time}"/>
-                            <p th:if="${#fields.hasErrors('batchIngredients[__${itemStat.index}__].time')}" style="color: red">Time is a number of minutes, not a string</p>
+                            <p th:if="${#fields.hasErrors('batchIngredients[__${itemStat.index}__].time')}"
+                               style="color: red">Time is a number of minutes, not a string</p>
                         </td>
                         <td>
                             <select th:field="*{batchIngredients[__${itemStat.index}__].techniqueType}">
@@ -103,29 +108,32 @@
             </div>
 
             <!--LIST OF MASHES-->
-            </br>
-            </br>
+            <br>
+            <br>
             <h4 class="my-3 text-center">Add mashes</h4>
-            <div id="mashList">
-                <table>
-                    <thead>
+            <div>
+                <table class="table">
+                    <thead class="thead-light">
                     <tr>
-                        <th style="width: 200px;">Step</th>
-                        <th style="width: 200px;">Temperature</th>
-                        <th style="width: 200px;">Duration Mins</th>
+                        <th >Step</th>
+                        <th>Temperature</th>
+                        <th>Duration Mins</th>
                     </tr>
                     </thead>
 
-                    <tbody>
-                    <tr class="row item" th:each="mash, status : ${batch.mashes}">
-                        <td class="col form-group" style="width: 200px;" th:text="${status.count}"/>
-                        <td class="col form-group">
+                    <tbody id="mashList">
+                    <tr class="abc" th:each="mash, status : ${batch.mashes}">
+                        <td  th:text="${status.count}"></td>
+                        <td >
                             <input th:field="*{mashes[__${status.index}__].temp}" type="text" class="form-control">
-                            <p th:if="${#fields.hasErrors('mashes[__${status.index}__].temp')}" style="color: red">Temperature is a double, not a string</p>
+                            <p th:if="${#fields.hasErrors('mashes[__${status.index}__].temp')}" style="color: red">
+                                Temperature is a double, not a string</p>
                         </td>
-                        <td class="col form-group">
-                            <input th:field="*{mashes[__${status.index}__].durationMins}" type="text" class="form-control">
-                            <p th:if="${#fields.hasErrors('mashes[__${status.index}__].temp')}" style="color: red">Temperature is a double, not a string</p>
+                        <td >
+                            <input th:field="*{mashes[__${status.index}__].durationMins}" type="text"
+                                   class="form-control">
+                            <p th:if="${#fields.hasErrors('mashes[__${status.index}__].durationMins')}" style="color: red">
+                                duration is int, not a string</p>
                         </td>
                     </tr>
                     </tbody>
@@ -134,18 +142,14 @@
         </div>
 
         <!--ADD NEW ROW BUTTON-->
-        <div class="row">
-            <div class="col">
-                <button type="button" class="btn btn-success" onclick="addRow()">Next step</button>
-            </div>
-        </div>
+
+        <button type="button" class="btn btn-info" onclick="addRow()">Next step</button>
 
         <!--SUBMIT FORM BUTTON-->
-        <div>
-            <div style="padding: 10px">
-                <button type="submit">Add Batch</button>
-            </div>
-        </div>
+        <br><br>
+
+        <button type="submit" class="btn btn-success mb-5">Add Batch</button>
+
 
     </form>
 </div>
@@ -153,15 +157,15 @@
 
     let addRow = function () {
         let listName = 'mashes'; //list name in Catalog.class
-        let fieldsNames = ['durationMins', 'temp']; //field names from Movie.class
-        let rowIndex = document.querySelectorAll('.item').length; //we can add mock class to each movie-row
+        let fieldsNames = ['temp', 'durationMins']; //field names from Movie.class
+        let rowIndex = document.querySelectorAll('.abc').length; //we can add mock class to each movie-row
 
         let row = document.createElement('tr');
-        row.classList.add('row', 'item');
+        row.classList.add('abc');
 
 
         let col = document.createElement('td');
-        col.classList.add('col', 'form-group');
+        // col.classList.add('col', 'form-group');
         col.style.width = "200px";
 
         col.innerText = (rowIndex + 1).toString();
@@ -169,7 +173,7 @@
 
         fieldsNames.forEach((fieldName) => {
             let col = document.createElement('td');
-            col.classList.add('col', 'form-group');
+            // col.classList.add('col', 'form-group');
             col.style.width = "200px";
 
             let input = document.createElement('input');

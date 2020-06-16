@@ -72,11 +72,11 @@ public class ProdDataLoader implements CommandLineRunner {
         batch2.addMash(new Mash(1, 150, 64));
         batch2.addMash(new Mash(2, 30, 77));
 
-        addNLogs(batch3, 74, LocalDateTime.of(2020, 1, 12, 13, 24), 14, 15, 8.5, 10.5, 9, 9.5, 5.9, 6.1);
+        addNLogs(batch3, 74, LocalDateTime.of(2020, 1, 12, 13, 24), 11, 13, 11, 13, 12, 12, 1, 1);
         batch3.addMash(new Mash(1, 120, 65));
         batch3.addMash(new Mash(1, 30, 76));
 
-        addNLogs(batch4, 102, LocalDateTime.of(2020, 5, 16, 20, 39), 20, 25, 14, 16, 15, 16, 10, 10.5);
+        addNLogs(batch4, 102, LocalDateTime.of(2020, 5, 16, 20, 39), 11, 13, 11, 13, 12, 12, 1, 1);
         batch4.addMash(new Mash(1, 150, 64));
         batch4.addMash(new Mash(2, 20, 50));
         batch4.addMash(new Mash(3, 30, 76));
@@ -107,45 +107,37 @@ public class ProdDataLoader implements CommandLineRunner {
         ingredientService.save(ingredient3);
 
         Ingredient ingredient4 = new Ingredient("Citra", IngredientType.HOPS, UnitIngredient.GRAMS, 0, "alpha acid ~10-15%");
-        Inventory inventory9 = new Inventory(ingredient3.getName(), LocalDateTime.of(2019, 11, 8, 0, 0), 400, LocalDateTime.of(2020, 9, 23, 0, 0), LocalDateTime.of(2019, 11, 10, 0, 0));
+        Inventory inventory9 = new Inventory(ingredient4.getName(), LocalDateTime.of(2019, 11, 8, 0, 0), 400, LocalDateTime.of(2020, 9, 23, 0, 0), LocalDateTime.of(2019, 11, 10, 0, 0));
         ingredient4.addInventory(inventory9);
         ingredientService.save(ingredient4);
 
         Ingredient ingredient5 = new Ingredient("Chinook", IngredientType.HOPS, UnitIngredient.GRAMS, 0, "alpha acid ~12-14%");
-        Inventory inventory10 = new Inventory(ingredient3.getName(), LocalDateTime.of(2019, 11, 8, 0, 0), 400, LocalDateTime.of(2020, 9, 23, 0, 0), LocalDateTime.of(2019, 11, 10, 0, 0));
+        Inventory inventory10 = new Inventory(ingredient5.getName(), LocalDateTime.of(2019, 11, 8, 0, 0), 400, LocalDateTime.of(2020, 9, 23, 0, 0), LocalDateTime.of(2019, 11, 10, 0, 0));
         ingredient5.addInventory(inventory10);
         ingredientService.save(ingredient5);
 
         Ingredient ingredient6 = new Ingredient("Barley", IngredientType.MALT, UnitIngredient.GRAMS, 0, "just some barley malt");
-        Inventory inventory11 = new Inventory(ingredient3.getName(), LocalDateTime.of(2019, 11, 8, 0, 0), 10000, LocalDateTime.of(2020, 9, 23, 0, 0), LocalDateTime.of(2019, 11, 10, 0, 0));
+        Inventory inventory11 = new Inventory(ingredient6.getName(), LocalDateTime.of(2019, 11, 8, 0, 0), 15000, LocalDateTime.of(2020, 9, 23, 0, 0), LocalDateTime.of(2019, 11, 10, 0, 0));
         ingredient6.addInventory(inventory11);
+        Inventory inventory15 = new Inventory(ingredient6.getName(), LocalDateTime.of(2020, 5, 8, 0, 0), 6000, LocalDateTime.of(2020, 12, 23, 0, 0), LocalDateTime.of(2019, 5, 10, 0, 0));
+        ingredient6.addInventory(inventory15);
         ingredientService.save(ingredient6);
 
         Ingredient ingredient7 = new Ingredient("Wheat", IngredientType.MALT, UnitIngredient.GRAMS, 0, "just some wheat malt");
-        Inventory inventory12 = new Inventory(ingredient3.getName(), LocalDateTime.of(2019, 11, 8, 0, 0), 2000, LocalDateTime.of(2020, 9, 23, 0, 0), LocalDateTime.of(2019, 11, 10, 0, 0));
+        Inventory inventory12 = new Inventory(ingredient7.getName(), LocalDateTime.of(2019, 11, 8, 0, 0), 2000, LocalDateTime.of(2020, 9, 23, 0, 0), LocalDateTime.of(2019, 11, 10, 0, 0));
         ingredient7.addInventory(inventory12);
         ingredientService.save(ingredient7);
 
+        Ingredient ingredient8 = new Ingredient("Pilsen", IngredientType.MALT, UnitIngredient.GRAMS, 0, "just some pilsen malt");
+        Inventory inventory13 = new Inventory(ingredient8.getName(), LocalDateTime.of(2020, 2, 8, 0, 0), 500, LocalDateTime.of(2020, 9, 23, 0, 0), LocalDateTime.of(2020, 02, 8, 0, 0));
+        ingredient8.addInventory(inventory13);
+        ingredientService.save(ingredient8);
 
-//
-//        Ingredient ingredient2 = new Ingredient("Yeast north", IngredientType.YEAST, UnitIngredient.LB, 0, "Freshly");
-//        Inventory inventory4 = new Inventory(ingredient2.getName(), LocalDateTime.of(2020, 3, 12, 12, 4), 153, LocalDateTime.of(2020, 6, 19, 20, 54), LocalDateTime.of(2020, 12, 29, 0, 0));
-//        Inventory inventory5 = new Inventory(ingredient2.getName(), LocalDateTime.of(2020, 4, 14, 7, 42), 613, LocalDateTime.of(2021, 7, 1, 18, 20), null);
-//        ingredient2.addInventory(inventory4);
-//        ingredient2.addInventory(inventory5);
-//        ingredientService.save(ingredient2);
-//
-//        Ingredient ingredient3 = new Ingredient("Icelandic hops", IngredientType.HOPS, UnitIngredient.LB, 0, "The best around");
-//        Inventory inventory6 = new Inventory(ingredient3.getName(), LocalDateTime.of(2020, 4, 9, 12, 52), 6984, LocalDateTime.of(2020, 9, 23, 3, 48), LocalDateTime.of(2020, 5, 22, 0, 0));
-//        ingredient3.addInventory(inventory6);
-//        ingredientService.save(ingredient3);
-//
-//        Ingredient ingredient4 = new Ingredient("Sea salt", IngredientType.OTHER, UnitIngredient.LB, 0, "Bought in a local shop");
-//        Inventory inventory7 = new Inventory(ingredient4.getName(), LocalDateTime.of(2020, 1, 23, 10, 11), 4314, LocalDateTime.of(2020, 11, 20, 10, 23), LocalDateTime.of(2020, 4, 9, 0, 0));
-//        Inventory inventory8 = new Inventory(ingredient4.getName(), LocalDateTime.of(2020, 4, 1, 0, 50), 6424, LocalDateTime.of(2021, 2, 3, 13, 44), null);
-//        ingredient4.addInventory(inventory7);
-//        ingredient4.addInventory(inventory8);
-//        ingredientService.save(ingredient4);
+        Ingredient ingredient9 = new Ingredient("Red", IngredientType.MALT, UnitIngredient.GRAMS, 0, "just some red malt");
+        Inventory inventory14 = new Inventory(ingredient9.getName(), LocalDateTime.of(2020, 2, 8, 0, 0), 500, LocalDateTime.of(2020, 9, 23, 0, 0), LocalDateTime.of(2020, 02, 8, 0, 0));
+        ingredient9.addInventory(inventory14);
+        ingredientService.save(ingredient9);
+
 
         //WATER
         BatchIngredient batchIngredient1 = new BatchIngredient(batch1.getId(), ingredient1.getName(), 25, 0, TechniqueType.BOIL);
@@ -184,54 +176,53 @@ public class ProdDataLoader implements CommandLineRunner {
         BatchIngredient batchIngredient10 = new BatchIngredient(batch1.getId(), ingredient4.getName(), 100, 30, TechniqueType.BOIL);
         ingredient4.addBatchIngredient((batchIngredient10));
         batch1.addBatchIngredients(batchIngredient10);
+        BatchIngredient batchIngredient18 = new BatchIngredient(batch3.getId(), ingredient4.getName(), 100, 30, TechniqueType.BOIL);
+        ingredient4.addBatchIngredient((batchIngredient18));
+        batch3.addBatchIngredients(batchIngredient18);
 
-        //Citra
+        //CHINOOK
         BatchIngredient batchIngredient11 = new BatchIngredient(batch1.getId(), ingredient5.getName(), 50, 20, TechniqueType.BOIL);
         ingredient5.addBatchIngredient((batchIngredient11));
         batch1.addBatchIngredients(batchIngredient11);
+        BatchIngredient batchIngredient17 = new BatchIngredient(batch2.getId(), ingredient5.getName(), 150, 20, TechniqueType.BOIL);
+        ingredient5.addBatchIngredient((batchIngredient17));
+        batch2.addBatchIngredients(batchIngredient17);
+        BatchIngredient batchIngredient22 = new BatchIngredient(batch4.getId(), ingredient5.getName(), 100, 20, TechniqueType.BOIL);
+        ingredient5.addBatchIngredient((batchIngredient22));
+        batch4.addBatchIngredients(batchIngredient22);
 
         //BARLEY
         BatchIngredient batchIngredient12 = new BatchIngredient(batch1.getId(), ingredient6.getName(), 6000, 0, TechniqueType.BOIL);
         ingredient6.addBatchIngredient((batchIngredient12));
         batch1.addBatchIngredients(batchIngredient12);
+        BatchIngredient batchIngredient19 = new BatchIngredient(batch3.getId(), ingredient6.getName(), 6000, 0, TechniqueType.BOIL);
+        ingredient6.addBatchIngredient((batchIngredient19));
+        batch3.addBatchIngredients(batchIngredient19);
+        BatchIngredient batchIngredient21 = new BatchIngredient(batch4.getId(), ingredient6.getName(), 6000, 0, TechniqueType.BOIL);
+        ingredient6.addBatchIngredient((batchIngredient21));
+        batch4.addBatchIngredients(batchIngredient21);
 
         //WHEAT
         BatchIngredient batchIngredient13 = new BatchIngredient(batch1.getId(), ingredient7.getName(), 500, 0, TechniqueType.BOIL);
         ingredient7.addBatchIngredient((batchIngredient13));
         batch1.addBatchIngredients(batchIngredient13);
+        BatchIngredient batchIngredient15 = new BatchIngredient(batch2.getId(), ingredient7.getName(), 500, 0, TechniqueType.BOIL);
+        ingredient7.addBatchIngredient((batchIngredient15));
+        batch2.addBatchIngredients(batchIngredient15);
+        BatchIngredient batchIngredient20 = new BatchIngredient(batch4.getId(), ingredient7.getName(), 500, 0, TechniqueType.BOIL);
+        ingredient7.addBatchIngredient((batchIngredient20));
+        batch4.addBatchIngredients(batchIngredient20);
 
-//        //YEAST NORTH
-//        BatchIngredient batchIngredient5 = new BatchIngredient(batch2.getId(), ingredient2.getName(), 51, 12, TechniqueType.DRY);
-//        BatchIngredient batchIngredient6 = new BatchIngredient(batch3.getId(), ingredient2.getName(), 128, 34, TechniqueType.DRY);
-//        ingredient2.addBatchIngredient(batchIngredient5);
-//        ingredient2.addBatchIngredient(batchIngredient6);
-//        batch2.addBatchIngredients(batchIngredient5);
-//        batch3.addBatchIngredients(batchIngredient6);
-//
-//        //ICELANDIC
-//        BatchIngredient batchIngredient7 = new BatchIngredient(batch1.getId(), ingredient3.getName(), 65, 64, TechniqueType.DRY);
-//        BatchIngredient batchIngredient8 = new BatchIngredient(batch3.getId(), ingredient3.getName(), 21, 86, TechniqueType.DRY);
-//        BatchIngredient batchIngredient9 = new BatchIngredient(batch4.getId(), ingredient3.getName(), 12, 25, TechniqueType.DRY);
-//        ingredient3.addBatchIngredient(batchIngredient7);
-//        ingredient3.addBatchIngredient(batchIngredient8);
-//        ingredient3.addBatchIngredient(batchIngredient9);
-//        batch1.addBatchIngredients(batchIngredient7);
-//        batch3.addBatchIngredients(batchIngredient8);
-//        batch4.addBatchIngredients(batchIngredient9);
-//
-//        //SEA SALT
-//        BatchIngredient batchIngredient10 = new BatchIngredient(batch1.getId(), ingredient4.getName(), 12, 86, TechniqueType.BOIL);
-//        BatchIngredient batchIngredient11 = new BatchIngredient(batch3.getId(), ingredient4.getName(), 53, 33, TechniqueType.BOIL);
-//        BatchIngredient batchIngredient12 = new BatchIngredient(batch3.getId(), ingredient4.getName(), 21, 75, TechniqueType.BOIL);
-//        BatchIngredient batchIngredient13 = new BatchIngredient(batch4.getId(), ingredient4.getName(), 32, 12, TechniqueType.BOIL);
-//        ingredient4.addBatchIngredient(batchIngredient10);
-//        ingredient4.addBatchIngredient(batchIngredient11);
-//        ingredient4.addBatchIngredient(batchIngredient12);
-//        ingredient4.addBatchIngredient(batchIngredient13);
-//        batch1.addBatchIngredients(batchIngredient10);
-//        batch2.addBatchIngredients(batchIngredient11);
-//        batch3.addBatchIngredients(batchIngredient12);
-//        batch4.addBatchIngredients(batchIngredient13);
+        //PILSEN
+        BatchIngredient batchIngredient14 = new BatchIngredient(batch2.getId(), ingredient8.getName(), 500, 0, TechniqueType.BOIL);
+        ingredient8.addBatchIngredient((batchIngredient14));
+        batch2.addBatchIngredients(batchIngredient14);
+
+        //RED
+        BatchIngredient batchIngredient16 = new BatchIngredient(batch2.getId(), ingredient9.getName(), 500, 0, TechniqueType.BOIL);
+        ingredient9.addBatchIngredient((batchIngredient16));
+        batch2.addBatchIngredients(batchIngredient16);
+
 
         batchService.save(batch1);
         batchService.save(batch2);
@@ -245,13 +236,17 @@ public class ProdDataLoader implements CommandLineRunner {
         ingredientService.save(ingredient5);
         ingredientService.save(ingredient6);
         ingredientService.save(ingredient7);
+        ingredientService.save(ingredient8);
+        ingredientService.save(ingredient9);
 
         ingredientService.setAmountOfProduct(ingredient1.getName(), batchIngredient1.getAmount() + batchIngredient2.getAmount() + batchIngredient3.getAmount() + batchIngredient4.getAmount());
         ingredientService.setAmountOfProduct(ingredient2.getName(), batchIngredient5.getAmount() + batchIngredient6.getAmount() + batchIngredient7.getAmount() + batchIngredient8.getAmount());
         ingredientService.setAmountOfProduct(ingredient3.getName(), batchIngredient9.getAmount());
-        ingredientService.setAmountOfProduct(ingredient4.getName(), batchIngredient10.getAmount());
-        ingredientService.setAmountOfProduct(ingredient5.getName(), batchIngredient11.getAmount());
-        ingredientService.setAmountOfProduct(ingredient6.getName(), batchIngredient12.getAmount());
-        ingredientService.setAmountOfProduct(ingredient7.getName(), batchIngredient13.getAmount());
+        ingredientService.setAmountOfProduct(ingredient4.getName(), batchIngredient10.getAmount() + batchIngredient18.getAmount());
+        ingredientService.setAmountOfProduct(ingredient5.getName(), batchIngredient11.getAmount() + batchIngredient17.getAmount()+ batchIngredient22.getAmount());
+        ingredientService.setAmountOfProduct(ingredient6.getName(), batchIngredient12.getAmount() + batchIngredient19.getAmount()+ batchIngredient21.getAmount());
+        ingredientService.setAmountOfProduct(ingredient7.getName(), batchIngredient13.getAmount() + batchIngredient15.getAmount()+ batchIngredient20.getAmount());
+        ingredientService.setAmountOfProduct(ingredient8.getName(), batchIngredient14.getAmount());
+        ingredientService.setAmountOfProduct(ingredient9.getName(), batchIngredient16.getAmount());
     }
 }

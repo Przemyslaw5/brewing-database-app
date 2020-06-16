@@ -144,10 +144,6 @@ public class ProdDataLoader implements CommandLineRunner {
         BatchIngredient batchIngredient2 = new BatchIngredient(batch2.getId(), ingredient1.getName(), 25, 0, TechniqueType.BOIL);
         BatchIngredient batchIngredient3 = new BatchIngredient(batch3.getId(), ingredient1.getName(), 20, 0, TechniqueType.BOIL);
         BatchIngredient batchIngredient4 = new BatchIngredient(batch4.getId(), ingredient1.getName(), 20, 0, TechniqueType.BOIL);
-        ingredient1.addBatchIngredient(batchIngredient1);
-        ingredient1.addBatchIngredient(batchIngredient2);
-        ingredient1.addBatchIngredient(batchIngredient3);
-        ingredient1.addBatchIngredient(batchIngredient4);
         batch1.addBatchIngredients(batchIngredient1);
         batch2.addBatchIngredients(batchIngredient2);
         batch3.addBatchIngredients(batchIngredient3);
@@ -158,10 +154,6 @@ public class ProdDataLoader implements CommandLineRunner {
         BatchIngredient batchIngredient6 = new BatchIngredient(batch2.getId(), ingredient2.getName(), 1, 0, TechniqueType.DRY);
         BatchIngredient batchIngredient7 = new BatchIngredient(batch3.getId(), ingredient2.getName(), 1, 0, TechniqueType.DRY);
         BatchIngredient batchIngredient8 = new BatchIngredient(batch4.getId(), ingredient2.getName(), 1, 0, TechniqueType.DRY);
-        ingredient2.addBatchIngredient(batchIngredient5);
-        ingredient2.addBatchIngredient(batchIngredient6);
-        ingredient2.addBatchIngredient(batchIngredient7);
-        ingredient2.addBatchIngredient(batchIngredient8);
         batch1.addBatchIngredients(batchIngredient5);
         batch2.addBatchIngredients(batchIngredient6);
         batch3.addBatchIngredients(batchIngredient7);
@@ -169,58 +161,44 @@ public class ProdDataLoader implements CommandLineRunner {
 
         //Mosaic
         BatchIngredient batchIngredient9 = new BatchIngredient(batch1.getId(), ingredient3.getName(), 100, 50, TechniqueType.BOIL);
-        ingredient3.addBatchIngredient((batchIngredient9));
         batch1.addBatchIngredients(batchIngredient9);
 
         //Citra
         BatchIngredient batchIngredient10 = new BatchIngredient(batch1.getId(), ingredient4.getName(), 100, 30, TechniqueType.BOIL);
-        ingredient4.addBatchIngredient((batchIngredient10));
         batch1.addBatchIngredients(batchIngredient10);
         BatchIngredient batchIngredient18 = new BatchIngredient(batch3.getId(), ingredient4.getName(), 100, 30, TechniqueType.BOIL);
-        ingredient4.addBatchIngredient((batchIngredient18));
         batch3.addBatchIngredients(batchIngredient18);
 
         //CHINOOK
         BatchIngredient batchIngredient11 = new BatchIngredient(batch1.getId(), ingredient5.getName(), 50, 20, TechniqueType.BOIL);
-        ingredient5.addBatchIngredient((batchIngredient11));
         batch1.addBatchIngredients(batchIngredient11);
         BatchIngredient batchIngredient17 = new BatchIngredient(batch2.getId(), ingredient5.getName(), 150, 20, TechniqueType.BOIL);
-        ingredient5.addBatchIngredient((batchIngredient17));
         batch2.addBatchIngredients(batchIngredient17);
         BatchIngredient batchIngredient22 = new BatchIngredient(batch4.getId(), ingredient5.getName(), 100, 20, TechniqueType.BOIL);
-        ingredient5.addBatchIngredient((batchIngredient22));
         batch4.addBatchIngredients(batchIngredient22);
 
         //BARLEY
         BatchIngredient batchIngredient12 = new BatchIngredient(batch1.getId(), ingredient6.getName(), 6000, 0, TechniqueType.BOIL);
-        ingredient6.addBatchIngredient((batchIngredient12));
         batch1.addBatchIngredients(batchIngredient12);
         BatchIngredient batchIngredient19 = new BatchIngredient(batch3.getId(), ingredient6.getName(), 6000, 0, TechniqueType.BOIL);
-        ingredient6.addBatchIngredient((batchIngredient19));
         batch3.addBatchIngredients(batchIngredient19);
         BatchIngredient batchIngredient21 = new BatchIngredient(batch4.getId(), ingredient6.getName(), 6000, 0, TechniqueType.BOIL);
-        ingredient6.addBatchIngredient((batchIngredient21));
         batch4.addBatchIngredients(batchIngredient21);
 
         //WHEAT
         BatchIngredient batchIngredient13 = new BatchIngredient(batch1.getId(), ingredient7.getName(), 500, 0, TechniqueType.BOIL);
-        ingredient7.addBatchIngredient((batchIngredient13));
         batch1.addBatchIngredients(batchIngredient13);
         BatchIngredient batchIngredient15 = new BatchIngredient(batch2.getId(), ingredient7.getName(), 500, 0, TechniqueType.BOIL);
-        ingredient7.addBatchIngredient((batchIngredient15));
         batch2.addBatchIngredients(batchIngredient15);
         BatchIngredient batchIngredient20 = new BatchIngredient(batch4.getId(), ingredient7.getName(), 500, 0, TechniqueType.BOIL);
-        ingredient7.addBatchIngredient((batchIngredient20));
         batch4.addBatchIngredients(batchIngredient20);
 
         //PILSEN
         BatchIngredient batchIngredient14 = new BatchIngredient(batch2.getId(), ingredient8.getName(), 500, 0, TechniqueType.BOIL);
-        ingredient8.addBatchIngredient((batchIngredient14));
         batch2.addBatchIngredients(batchIngredient14);
 
         //RED
         BatchIngredient batchIngredient16 = new BatchIngredient(batch2.getId(), ingredient9.getName(), 500, 0, TechniqueType.BOIL);
-        ingredient9.addBatchIngredient((batchIngredient16));
         batch2.addBatchIngredients(batchIngredient16);
 
 

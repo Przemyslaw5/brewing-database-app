@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -85,7 +84,7 @@ public class BatchController {
     public String processCreationForm(@Valid Batch batch, BindingResult result, Model model) {
         Batch b = batchService.findByName(batch.getName());
         int flagDate = batch.getBottledDate().compareTo(batch.getBrewedDate());
-        boolean flagAmounts = ingredientService.checkAmounts(batch);
+        boolean flagAmounts = ingredientService.checkAmounts(batch.getBatchIngredients());
         if (result.hasErrors() || b != null || flagDate < 0 || flagAmounts) {
             String amountError = "";
             if (b != null) {
@@ -112,7 +111,7 @@ public class BatchController {
             return "batches/new";
         }
         else {
-            result.addError(new ObjectError("uniqueName", "Batch with " + batch.getName() + " name already exists."));
+            ingredientService.changeAmountsInStock(batch.getBatchIngredients());
             this.batchService.save(batch);
             batch = this.batchService.findByName(batch.getName());
             batch.setBatchIngredients(ingredientService.getBatchIngredientsList(batch.getBatchIngredients(), batch));

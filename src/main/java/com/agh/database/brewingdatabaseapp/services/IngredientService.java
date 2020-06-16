@@ -81,7 +81,9 @@ public class IngredientService implements MongoService<Ingredient, String> {
     }
 
     public void setAmountOfProduct(String name, double amount){
+        if(amount <= 0.0) return;
         Ingredient ingredient = ingredientRepository.findByName(name);
+        ingredient.setUnitsInStock(ingredient.getUnitsInStock() - amount);
         List<Inventory> inventories = ingredient.getInventories();
         for (Inventory inventory: inventories){
             if(inventory.getAmountAvailable() > 0){
@@ -106,13 +108,19 @@ public class IngredientService implements MongoService<Ingredient, String> {
         }
     }
 
-    public boolean checkAmounts(Batch batch){
-        for (BatchIngredient batchIngredient : batch.getBatchIngredients()) {
+    public boolean checkAmounts(List<BatchIngredient> batchIngredients){
+        for (BatchIngredient batchIngredient : batchIngredients) {
             if (batchIngredient.getAmount() > ingredientRepository.findByName(batchIngredient.getIngredientName()).getUnitsInStock()) {
                 return true;
             }
         }
         return false;
+    }
+
+    public void changeAmountsInStock(List<BatchIngredient> batchIngredients){
+        for (BatchIngredient batchIngredient : batchIngredients) {
+            setAmountOfProduct(batchIngredient.getIngredientName(), batchIngredient.getAmount());
+        }
     }
 
     public List<Double> getAmountAvailable(List<BatchIngredient> batchIngredients){

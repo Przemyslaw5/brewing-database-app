@@ -19,7 +19,7 @@ Zdecydowaliśmy się na korzystanie z bazy MognoDB jak i za technologię pisania
 
 # Dostęp do aplikacji lokalnie
 
-Należy sklonować repozytorium. Następnie po zaimportowaniu wszystkich zależności, należy zmienić opcje konfiguracji, aby uruchomić aplikację z profilem `dev`. Po uruchomieniu aplikacji, dostępne jest ona w przeglądarce pod adresem: [http://localhost:8080/](http://localhost:8080/).
+Należy sklonować repozytorium. Następnie w katalogu `mongo` uruchomic kontener z baza `docker-compose up`. Następnie po zaimportowaniu wszystkich zależności, należy zmienić opcje konfiguracji, aby uruchomić aplikację z profilem `dev`. Po uruchomieniu aplikacji, dostępne jest ona w przeglądarce pod adresem: [http://localhost:8080/](http://localhost:8080/).
 Mile widziane jest również jakieś narzędzie klienckie np. [Robo3T](https://robomongo.org/) do śledzenia struktury bazy danych. Narzędzie te należy podłączyć pod defaultowy adres i port dla MongoDB: `localhost:27017`
 
 
